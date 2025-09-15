@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 import { createStaticNavigation, useNavigation, } from '@react-navigation/native';
 import COLORS from '../../constants/colors';
+import FONTS from '../../constants/fonts';
 
 const WelcomeScreen = props => {
   const navigation = useNavigation();
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.PRIMARY,
   },
   primaryButtonText:{
-    fontFamily: 'OutfitSemiBold',
+    fontFamily: FONTS.SEMIBOLD,
     color: COLORS.DARK,
     fontSize: 20,
   },
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.DARK,
   },
   SecondaryButtonText:{
-    fontFamily: 'OutfitSemiBold',
+    fontFamily: FONTS.SEMIBOLD,
     color: COLORS.WHITE,
     fontSize: 20,
   },
