@@ -5,9 +5,9 @@
     "**/*.tsx",
     "src/screens/auth/SignupScreen.tsx",
     "src/screens/auth/LoginScreen.tsx",
-    "src/screens/intro/WelcomeScreen.js",
+    "src/screens/intro/WelcomeScreen.jsx",
     "src/screens/index.js",
-    "src/screens/intro/OnBoardingScreen.tsx",
+    "src/screens/intro/OnBoardingScreen.jsx",
     "src/assets/images/index.js"
   ],
   "exclude": ["**/node_modules", "**/Pods"]

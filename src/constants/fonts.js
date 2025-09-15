@@ -5,6 +5,7 @@ const FONTS = {
     BOLD: 'OutfitBold',
     THIN: 'OutfitThin',
     LIGHT: 'OutfitLight',
+    EXTRABOLD: 'OutfitExtraBold',
 }
 
 export default FONTS;
