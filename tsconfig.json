@@ -6,7 +6,8 @@
     "src/screens/auth/SignupScreen.tsx",
     "src/screens/auth/LoginScreen.tsx",
     "src/screens/intro/WelcomeScreen.js",
-    "src/screens/index.js"
+    "src/screens/index.js",
+    "src/screens/intro/OnBoardingScreen.tsx"
   ],
   "exclude": ["**/node_modules", "**/Pods"]
 }
