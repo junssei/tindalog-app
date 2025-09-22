@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, Dimensions } from 'react-native'
 import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets, } from 'react-native-safe-area-context';
 import { DefaultTheme, NavigationContainer, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -12,6 +12,45 @@ const LoginScreen = () => {
 
   const [ username, setUsername ] = useState("");
   const [ password, setPassword ] = useState("");
+  const [errors, setErrors ] = useState({});
+
+  const [ togglePassword, setTogglePassword] = useState(true);
+  const [ toggleEye, setToggleEye ] = useState("eye-off");
+  const [ togglePWPlaceHolder, setTogglePWPlaceHolder] = useState("********");
+
+  function togglePass(){
+    if(togglePassword === true){
+      setTogglePassword(false)
+      setToggleEye("eye")
+      setTogglePWPlaceHolder("Password")
+    } else {
+      setTogglePassword(true)
+      setToggleEye("eye-off")
+      setTogglePWPlaceHolder("********");
+    }
+  }
+
+  const validationForm = () => {
+    let errors = {};
+    if(!username) errors.username = "Username is required";
+    if(!password) errors.password = "Password is required";
+
+    setErrors(errors);
+
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    if(validationForm()){
+      if(username === "tindahan" && password === "tindalog"){
+        navigation.navigate("HOMESCREEN");
+      }
+
+      setUsername("");
+      setPassword("");
+      setErrors({});
+    }
+  }
 
   return (
     <SafeAreaProvider>
@@ -33,15 +72,22 @@ const LoginScreen = () => {
             <View style={{
               gap: 24,
             }}>
-              <View style={[ styles.inputContainer ]}>
-                <Icon name="person" size={24} color={COLORS.DARK} />
-                <TextInput 
-                placeholder='Username'
-                placeholderTextColor={ COLORS.DARKGRAY }
-                style={[ styles.input, {fontFamily: FONTS.MEDIUM,
-                  fontSize: 18, color: COLORS.DARK} 
-                ]}
-                />
+              <View style={{ alignItems: "flex-end", }}>
+                <View style={[ styles.inputContainer ]}>
+                  <Icon name="person" size={24} color={COLORS.DARK} />
+                  <TextInput 
+                  placeholder='Username'
+                  placeholderTextColor={ COLORS.DARKGRAY }
+                  style={[ styles.input, {fontFamily: FONTS.MEDIUM,
+                    fontSize: 18, color: COLORS.DARK} 
+                  ]}
+                  onChangeText={setUsername}
+                  value={username}
+                  />
+                </View>
+                {
+                  errors.username ? <Text style={ styles.error }>{errors.username}</Text> : null
+                }
               </View>
               <View style={{
                 gap: 8,
@@ -55,34 +101,45 @@ const LoginScreen = () => {
                   }}>
                     <Icon name="lock-closed" size={24} color={COLORS.DARK} />
                     <TextInput
-                    secureTextEntry={false}
-                    placeholder='Password'
+                    secureTextEntry={togglePassword}
+                    placeholder={togglePWPlaceHolder}
                     placeholderTextColor={ COLORS.DARKGRAY }
                     style={[ styles.input, {fontFamily: FONTS.MEDIUM,
                       fontSize: 18, color: COLORS.DARK}]}
+                    onChangeText={setPassword}
+                    value={password}
                     />
                   </View>
-                  <Icon name="eye-off" size={24} color={COLORS.DARK} />
+                  <TouchableOpacity onPress={
+                    togglePass
+                  }>
+                    <Icon name={toggleEye} size={24} color={COLORS.DARK} />
+                  </TouchableOpacity>
                 </View>
-                <Text style={{
-                  fontFamily: FONTS.MEDIUM,
-                  fontSize: 18,
-                }}> Forgot Password? </Text>
+                {
+                  errors.password ? <Text style={ styles.error }>{errors.password}</Text> : null
+                }
+                <TouchableOpacity>
+                  <Text style={{
+                    fontFamily: FONTS.MEDIUM,
+                    fontSize: 18,
+                  }}> Forgot Password? </Text>
+                </TouchableOpacity>
               </View>
               <TouchableOpacity
                 style={[
                   styles.button, 
                   styles.primaryButton
                 ]}
-                onPress={() => {
-                  navigation.navigate("");
-                }}
+                onPress={ handleSubmit }
                 >
                   <Text style={[
                     styles.primaryButtonText
                   ]}> Login </Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => {
+                navigation.navigate("SIGNUP");
+              }}>
                 <Text style={{
                   fontFamily: FONTS.REGULAR,
                   textAlign: "center",
@@ -103,6 +160,11 @@ const LoginScreen = () => {
 }
 
 const styles = StyleSheet.create({
+  error:{
+    fontSize: 16,
+    color: COLORS.PINK,
+    fontFamily: FONTS.MEDIUM,
+  },
   inputContainer:{
     gap: 16,
     paddingVertical: 12,
@@ -115,6 +177,7 @@ const styles = StyleSheet.create({
   },
   
   input:{
+    width: 200,
     position: "relative",
   },
 

@@ -1,11 +1,40 @@
 import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets, } from 'react-native-safe-area-context';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet, Alert, BackHandler } from 'react-native'
 import React from 'react'
 import { createStaticNavigation, useNavigation, } from '@react-navigation/native';
 import COLORS from '../../constants/colors';
 import FONTS from '../../constants/fonts';
 
 const WelcomeScreen = props => {
+  React.useEffect(() => {
+  const onBackPress = () => {
+      Alert.alert(
+        'Exit App',
+        'Do you want to exit?',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => {
+              // Do nothing
+            },
+            style: 'cancel',
+          },
+          { text: 'YES', onPress: () => BackHandler.exitApp() },
+        ],
+        { cancelable: false }
+      );
+
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      onBackPress
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   const navigation = useNavigation();
   return (
     <SafeAreaProvider>
