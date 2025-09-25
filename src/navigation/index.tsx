@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { Image, useWindowDimensions } from 'react-native';
+import { Image, TouchableOpacity, useWindowDimensions } from 'react-native';
 import FONTS from '../constants/fonts';
 import COLORS from '../constants/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -74,7 +74,7 @@ const tabnavStyles = {
 
 const TabNavigation = () => {
   return <Tab.Navigator
-    screenOptions={tabnavStyles}
+    screenOptions={[tabnavStyles, {headerTitleStyle:{ fontFamily: FONTS.BOLD }},]}
   >
     <Tab.Screen 
       name={SCREENS.HOMESCREEN}
@@ -84,6 +84,7 @@ const TabNavigation = () => {
         tabBarIcon: ({focused}) => (
           <Icon name='home' size={24} color={COLORS.DARK} />
         ),
+        headerShown: false,
       }}
     />
     <Tab.Screen 
@@ -93,6 +94,11 @@ const TabNavigation = () => {
         title: "Customer",
         tabBarIcon: ({focused}) => (
           <Icon name='people' size={24} color={COLORS.DARK} />
+        ),
+        headerRight: () => (
+          <TouchableOpacity>
+            <Icon name='notifications' size={24} color={COLORS.DARK} />
+          </TouchableOpacity>
         )
       }}
     />
