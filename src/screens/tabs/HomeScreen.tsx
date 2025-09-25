@@ -7,6 +7,7 @@ import COLORS from '../../constants/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const HomeScreen = () => {
+
   React.useEffect(() => {
   const onBackPress = () => {
       Alert.alert(
@@ -80,7 +81,11 @@ const HomeScreen = () => {
               flexWrap: "wrap",
               flexDirection: "row",
             }}>
-              <TouchableOpacity style={[styles.button, {backgroundColor: COLORS.YELLOW}]}>
+              <TouchableOpacity style={[styles.button, {backgroundColor: COLORS.YELLOW}]}
+              onPress={() => {
+                console.log("Hello World");
+              }}
+              >
                 <Icon name='add' size={24} color={COLORS.DARK} />
                 <Text style={[ styles.buttonText ]}> Sale </Text>
               </TouchableOpacity>
