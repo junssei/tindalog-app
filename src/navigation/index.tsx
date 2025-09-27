@@ -17,7 +17,6 @@ import CustomerListScreen from '../screens/tabs/CustomerListScreen';
 import AddScreen from '../screens/tabs/AddScreen';
 import HistoryScreen from '../screens/tabs/HistoryScreen';
 import AccountScreen from '../screens/tabs/AccountScreen';
-import { HeaderTitle } from '@react-navigation/elements';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -59,22 +58,21 @@ const StackNavigation = () => {
   )
 }
 
-const tabnavStyles = {
-  tabBarStyle:{
-    position: "absolute",
-  },
-  tabBarLabelStyle:{
-    fontSize: 10,
-    color: COLORS.DARK,
-    fontFamily: FONTS.MEDIUM, 
-  },
-  tabBarActiveBackgroundColor:COLORS.PRIMARY,
-  animation: 'shift',
-}
-
 const TabNavigation = () => {
   return <Tab.Navigator
-    screenOptions={[tabnavStyles, {headerTitleStyle:{ fontFamily: FONTS.BOLD }},]}
+    screenOptions={{
+      tabBarStyle:{
+      position: "absolute",
+      },
+      tabBarLabelStyle:{
+        fontSize: 10,
+        color: COLORS.DARK,
+        fontFamily: FONTS.MEDIUM, 
+      },
+      tabBarActiveBackgroundColor:COLORS.PRIMARY,
+      animation: 'shift',
+      headerTitleStyle: { fontFamily: FONTS.BOLD },
+    }}
   >
     <Tab.Screen 
       name={SCREENS.HOMESCREEN}
