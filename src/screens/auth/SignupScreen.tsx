@@ -38,7 +38,8 @@ const SignupScreen = () => {
     if(!username) errors.username = "Username is required";
     if(!email) errors.email = "Email is required";
     if(!password) errors.password = "Password is required";
-    if(confirmPassword != password) errors.confirmPassword = "Password doesn't matched";
+    if(!confirmPassword) errors.confirmPassword = "Password is required";
+    if(confirmPassword != password) errors.matchConfirmPassword = "Password doesn't matched";
 
     setErrors(errors);
 
@@ -193,6 +194,9 @@ const SignupScreen = () => {
                 </View>
                 {
                   errors.confirmPassword ? <Text style={ styles.error }>{errors.confirmPassword}</Text> : null
+                }
+                {
+                  errors.matchConfirmPassword ? <Text style={ styles.error }>{errors.matchConfirmPassword}</Text> : null
                 }
               </View>
               <TouchableOpacity
