@@ -32,7 +32,18 @@ const CustomerListScreen = () => {
               keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
                 <View>
-                  <View></View>
+                    <View>
+                    <Image
+                      source={
+                      item.c_gender == 'male'
+                        ? require('../../assets/profiles/male.png')
+                        : item.c_gender == 'female'
+                        ? require('../../assets/profiles/female.png')
+                        : require('../../assets/profiles/default.png')
+                      }
+                      style={{ width: 42, height: 42 }}
+                    />
+                    </View>
                   <Text>{item.c_fullname}</Text>
                   <Text>{item.c_gender}</Text>
                 </View>
