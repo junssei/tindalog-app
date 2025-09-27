@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, Dimensions 
 import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets, } from 'react-native-safe-area-context';
 import { DefaultTheme, NavigationContainer, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import React, { useState }from 'react'
+import React, { useState, useEffect }from 'react'
 
 import COLORS from '../../constants/colors';
 import FONTS from '../../constants/fonts';

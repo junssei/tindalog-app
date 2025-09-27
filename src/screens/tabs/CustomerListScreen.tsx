@@ -7,8 +7,14 @@ import COLORS from '../../constants/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 
+type Customer = {
+  id: number;
+  c_fullname: string;
+  c_gender: string;
+};
+
 const CustomerListScreen = () => {
-  const [customer, setCustomer] = useState([])
+  const [customer, setCustomer] = useState<Customer[]>([])
 
   useEffect(() => {
     fetch("https://tl-backend-07ks.onrender.com/customers")
@@ -26,22 +32,40 @@ const CustomerListScreen = () => {
           paddingHorizontal: 42,
           backgroundColor: "#FFFFFF",
           }}>
+            <View style={{
+              flexDirection: "row",
+              alignItems: "center",
+              width: "100%",
+              borderWidth: 2,
+              borderRadius: 72,
+              paddingVertical: 8,
+              paddingHorizontal: 12,
+              borderColor: COLORS.BLUE,
+            }}>
+              <Icon name="search" size={24} color={COLORS.DARK}/>
+              <TextInput
+              placeholder='Search'
+              placeholderTextColor={ COLORS.DARKGRAY }
+              style={[ styles.input, {fontFamily: FONTS.MEDIUM,
+                    fontSize: 18, color: COLORS.DARK} ]}
+              />
+            </View>
             <View>
               <FlatList
-              data={customer}
+              data={ customer }
               keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
                 <View>
                     <View>
                     <Image
                       source={
-                      item.c_gender == 'male'
+                        item.c_gender == 'Male'
                         ? require('../../assets/profiles/male.png')
-                        : item.c_gender == 'female'
+                        : item.c_gender == 'Female'
                         ? require('../../assets/profiles/female.png')
                         : require('../../assets/profiles/default.png')
                       }
-                      style={{ width: 42, height: 42 }}
+                      style={{ width: 64, height: 64 }}
                     />
                     </View>
                   <Text>{item.c_fullname}</Text>
@@ -57,6 +81,11 @@ const CustomerListScreen = () => {
 }
 
 const styles = StyleSheet.create({
+  input:{
+    width: 200,
+    position: "relative",
+  },
+
   section:{
     gap: 12,
   },
