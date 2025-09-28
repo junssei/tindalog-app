@@ -6,13 +6,7 @@ import FONTS from '../../constants/fonts';
 import COLORS from '../../constants/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { useNavigation } from '@react-navigation/native';
-
-
-const HomeScreen = ({ route }) => {
-  const navigation = useNavigation();
-
-  const { user } = route.params;
+const HomeScreen = () => {
 
   React.useEffect(() => {
   const onBackPress = () => {

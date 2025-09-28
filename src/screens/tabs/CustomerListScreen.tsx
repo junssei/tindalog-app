@@ -25,57 +25,53 @@ const CustomerListScreen = () => {
 
   return (
     <SafeAreaProvider>
-      <ScrollView>
-        <SafeAreaView style={{
-          gap: 32,
-          paddingVertical: 42,
-          paddingHorizontal: 42,
-          backgroundColor: "#FFFFFF",
+      <SafeAreaView style={{
+        gap: 32,
+        paddingVertical: 42,
+        paddingHorizontal: 42,
+        backgroundColor: "#FFFFFF",
+        }}>
+          <View style={{
+            flexDirection: "row",
+            alignItems: "center",
+            width: "100%",
+            borderWidth: 2,
+            borderRadius: 72,
+            paddingVertical: 8,
+            paddingHorizontal: 12,
+            borderColor: COLORS.BLUE,
           }}>
-            <View style={{
-              flexDirection: "row",
-              alignItems: "center",
-              width: "100%",
-              borderWidth: 2,
-              borderRadius: 72,
-              paddingVertical: 8,
-              paddingHorizontal: 12,
-              borderColor: COLORS.BLUE,
-            }}>
-              <Icon name="search" size={24} color={COLORS.DARK}/>
-              <TextInput
-              placeholder='Search'
-              placeholderTextColor={ COLORS.DARKGRAY }
-              style={[ styles.input, {fontFamily: FONTS.MEDIUM,
-                    fontSize: 18, color: COLORS.DARK} ]}
-              />
-            </View>
+            <Icon name="search" size={24} color={COLORS.DARK}/>
+            <TextInput
+            placeholder='Search'
+            placeholderTextColor={ COLORS.DARKGRAY }
+            style={[ styles.input, {fontFamily: FONTS.MEDIUM,
+                  fontSize: 18, color: COLORS.DARK} ]}
+            />
+          </View>
+          <FlatList
+          data={ customer }
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
             <View>
-              <FlatList
-              data={ customer }
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item }) => (
                 <View>
-                    <View>
-                    <Image
-                      source={
-                        item.c_gender == 'Male'
-                        ? require('../../assets/profiles/male.png')
-                        : item.c_gender == 'Female'
-                        ? require('../../assets/profiles/female.png')
-                        : require('../../assets/profiles/default.png')
-                      }
-                      style={{ width: 64, height: 64 }}
-                    />
-                    </View>
-                  <Text>{item.c_fullname}</Text>
-                  <Text>{item.c_gender}</Text>
+                <Image
+                  source={
+                    item.c_gender == 'Male'
+                    ? require('../../assets/profiles/male.png')
+                    : item.c_gender == 'Female'
+                    ? require('../../assets/profiles/female.png')
+                    : require('../../assets/profiles/default.png')
+                  }
+                  style={{ width: 64, height: 64 }}
+                />
                 </View>
-              )}
-              />
+              <Text>{item.c_fullname}</Text>
+              <Text>{item.c_gender}</Text>
             </View>
-        </SafeAreaView>
-      </ScrollView>
+          )}
+          />
+      </SafeAreaView>
     </SafeAreaProvider>
   )
 }

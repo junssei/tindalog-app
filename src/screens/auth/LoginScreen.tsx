@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native'
 import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets, } from 'react-native-safe-area-context';
-import { DefaultTheme, NavigationContainer, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import React, { useState, useEffect } from 'react'
 
@@ -54,8 +54,8 @@ const LoginScreen = () => {
         if (res.ok) {
           Alert.alert("Success", "Login successful!");
           console.log("User:", data.user);
-          // navigate to Home screen
-          navigation.navigate("HOME", { user: data.user });
+
+          navigation.navigate("HOMESCREEN");
           } else {
             Alert.alert("Error", data.error || "Login failed");
           }

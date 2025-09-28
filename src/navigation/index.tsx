@@ -54,6 +54,12 @@ const StackNavigation = () => {
         options={{
           headerShown: false,
         }}/>
+
+        <Stack.Screen
+        name={SCREENS.ADDSCREEN}
+        component={AddScreen}
+        options={{ presentation: "modal" }}
+        />
     </Stack.Navigator>
   )
 }
@@ -101,7 +107,7 @@ const TabNavigation = () => {
       }}
     />
     <Tab.Screen 
-      name={SCREENS.ADDSCREEN}
+      name={SCREENS.TEMPADD}
       component={AddScreen}
       options={{
         title: "Add",
@@ -109,6 +115,12 @@ const TabNavigation = () => {
           <Icon name='add-circle' size={24} color={COLORS.DARK} />
         )
       }}
+      listeners={({ navigation }) => ({
+        tabPress: (e) => {
+          e.preventDefault();
+          navigation.navigate(SCREENS.ADDSCREEN);
+        },
+      })}
     />
     <Tab.Screen 
       name={SCREENS.HISTORYSCREEN}
