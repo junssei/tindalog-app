@@ -1,8 +1,8 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, Dimensions } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native'
 import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets, } from 'react-native-safe-area-context';
 import { DefaultTheme, NavigationContainer, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import React, { useState, useEffect }from 'react'
+import React, { useState, useEffect } from 'react'
 
 import COLORS from '../../constants/colors';
 import FONTS from '../../constants/fonts';
@@ -10,7 +10,7 @@ import FONTS from '../../constants/fonts';
 const LoginScreen = () => {
   const navigation = useNavigation();
 
-  const [ username, setUsername ] = useState("");
+  const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
   const [errors, setErrors ] = useState({});
 
@@ -32,7 +32,7 @@ const LoginScreen = () => {
 
   const validationForm = () => {
     let errors = {};
-    if(!username) errors.username = "Username is required";
+    if(!email) errors.email = "Username is required";
     if(!password) errors.password = "Password is required";
 
     setErrors(errors);
@@ -40,13 +40,31 @@ const LoginScreen = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleLogin = async () => {
     if(validationForm()){
-      if(username === "tindahan" && password === "tindalog"){
-        navigation.navigate("HOMESCREEN");
+      try {
+        const res = await fetch("https://tl-backend-07ks.onrender.com/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          Alert.alert("Success", "Login successful!");
+          console.log("User:", data.user);
+          // navigate to Home screen
+          navigation.navigate("HOME", { user: data.user });
+          } else {
+            Alert.alert("Error", data.error || "Login failed");
+          }
+      } catch (err) {
+        console.error(err);
+        Alert.alert("Error", "Something went wrong");
       }
 
-      setUsername("");
+      setEmail("");
       setPassword("");
       setErrors({});
     }
@@ -74,19 +92,19 @@ const LoginScreen = () => {
             }}>
               <View style={{ alignItems: "flex-end", }}>
                 <View style={[ styles.inputContainer ]}>
-                  <Icon name="person" size={24} color={COLORS.DARK} />
+                  <Icon name="mail" size={24} color={COLORS.DARK} />
                   <TextInput 
-                  placeholder='Username'
+                  placeholder='Email'
                   placeholderTextColor={ COLORS.DARKGRAY }
                   style={[ styles.input, {fontFamily: FONTS.MEDIUM,
                     fontSize: 18, color: COLORS.DARK} 
                   ]}
-                  onChangeText={setUsername}
-                  value={username}
+                  onChangeText={setEmail}
+                  value={email}
                   />
                 </View>
                 {
-                  errors.username ? <Text style={ styles.error }>{errors.username}</Text> : null
+                  errors.email ? <Text style={ styles.error }>{errors.email}</Text> : null
                 }
               </View>
               <View style={{
@@ -131,7 +149,7 @@ const LoginScreen = () => {
                   styles.button, 
                   styles.primaryButton
                 ]}
-                onPress={ handleSubmit }
+                onPress={ handleLogin }
                 >
                   <Text style={[
                     styles.primaryButtonText
