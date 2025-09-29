@@ -1,3 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -22,8 +25,41 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const StackNavigation = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [onboardingCompleted, setOnboardingCompleted] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkStorage = async () => {
+      try {
+        const onboarding = await AsyncStorage.getItem('onboardingCompleted');
+        const loggedIn = await AsyncStorage.getItem("isLoggedIn");
+        
+        if (onboarding) setOnboardingCompleted(true);
+        if (loggedIn) setLoggedIn(true);
+
+      } catch (err) {
+        console.log('Error checking storage:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkStorage();
+  }, []);
+
+  if (isLoading) return SCREENS.WELCOME;
+
+  // Decide where to start
+  let initialRoute = SCREENS.INTRO;
+  if (onboardingCompleted && !isLoggedIn) {
+    initialRoute = SCREENS.WELCOME;
+  } else if (onboardingCompleted && isLoggedIn) {
+    initialRoute = SCREENS.HOMESCREEN;
+  }
+
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName={initialRoute}>
         <Stack.Screen
         name={SCREENS.INTRO}
         component={OnBoardingScreen}

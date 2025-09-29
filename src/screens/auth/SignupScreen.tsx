@@ -254,20 +254,23 @@ const styles = StyleSheet.create({
   
   input:{
     position: "relative",
-    width: 200,
+    width: 160,
   },
 
   primaryButton:{
     backgroundColor: COLORS.PRIMARY,
   },
+
   primaryButtonText:{
     fontFamily: FONTS.SEMIBOLD,
     color: COLORS.DARK,
     fontSize: 20,
   },
+
   secondaryButton:{
     backgroundColor: COLORS.DARK,
   },
+  
   SecondaryButtonText:{
     fontFamily: FONTS.SEMIBOLD,
     color: COLORS.WHITE,

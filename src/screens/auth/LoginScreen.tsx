@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native'
 import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets, } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -55,6 +57,9 @@ const LoginScreen = () => {
           Alert.alert("Success", "Login successful!");
           console.log("User:", data.user);
 
+          await AsyncStorage.setItem("isLoggedIn", "true");
+          await AsyncStorage.setItem("userData", JSON.stringify(data.user));
+          
           navigation.navigate("HOMESCREEN");
           } else {
             Alert.alert("Error", data.error || "Login failed");
@@ -195,7 +200,7 @@ const styles = StyleSheet.create({
   },
   
   input:{
-    width: 200,
+    width: 160,
     position: "relative",
   },
 

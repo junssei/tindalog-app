@@ -50,6 +50,7 @@ const CustomerListScreen = () => {
             />
           </View>
           <FlatList
+          scrollEnabled
           data={ customer }
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (

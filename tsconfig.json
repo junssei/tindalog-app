@@ -8,7 +8,8 @@
     "src/screens/intro/WelcomeScreen.jsx",
     "src/screens/index.js",
     "src/screens/intro/OnBoardingScreen.jsx",
-    "src/assets/images/index.js"
+    "src/assets/images/index.js",
+    "src/screens/tabs/AccountScreen.jsx"
   ],
   "exclude": ["**/node_modules", "**/Pods"]
 }

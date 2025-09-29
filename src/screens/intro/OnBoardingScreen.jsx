@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets, } from 'react-native-safe-area-context';
 import { View, Text, Button, Image, Platform, TouchableOpacity, StyleSheet, Touchable } from 'react-native';
 import { useNavigation, } from '@react-navigation/native';
@@ -28,6 +30,12 @@ const board = [
 const Render = () => {
     const navigation = useNavigation();
     const [page, setPage] = useState(0);
+
+    
+    const finishOnboarding = async () => {
+        await AsyncStorage.setItem('onboardingCompleted', 'true');
+        navigation.navigate("WELCOME");
+    };
 
     return(
         <View style={{
@@ -68,9 +76,7 @@ const Render = () => {
                     styles.button, 
                     styles.primaryButton
                 ]}
-                onPress={() => {
-                    navigation.navigate("WELCOME");
-                }}>
+                onPress={ finishOnboarding }>
                     <Text style={[
                     styles.primaryButtonText
                     ]}> Get Started </Text>
