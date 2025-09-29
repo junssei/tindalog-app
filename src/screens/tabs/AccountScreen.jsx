@@ -14,7 +14,9 @@ const AccountScreen = () => {
 
   const logoutUser = async () => {
     await AsyncStorage.removeItem('isLoggedIn');
+    await AsyncStorage.removeItem('userData')
     navigation.replace('WELCOME');
+    console.log("Logged out");
   };
 
   return (

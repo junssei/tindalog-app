@@ -5,20 +5,66 @@ import { ScrollView } from 'react-native-gesture-handler';
 import FONTS from '../../constants/fonts';
 import COLORS from '../../constants/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
 import axios from 'axios';
 
 const AddScreen = () => {
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={{
+      gap: 32,
+      paddingVertical: 42,
+      paddingHorizontal: 42,
+      justifyContent: 'center',
+      backgroundColor: "rgba(0,0,0,0.5)",
+      }}>
       <SafeAreaView style={{
         gap: 32,
         paddingVertical: 42,
         paddingHorizontal: 42,
-        backgroundColor: "#FFFFFF",
+        borderRadius: 16,
+        backgroundColor: "rgba(255,255,255,1)"
         }}>
+        <View style={{ gap: 16 }}>
+          <TouchableOpacity style={[styles.button, {backgroundColor: COLORS.YELLOW}]}
+              onPress={() => {
+                console.log("Hello World");
+              }}
+              >
+                <MaterialDesignIcons name='chart-line' size={24} color={COLORS.DARK} />
+                <Text style={[ styles.buttonText ]}> Sale </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.button, {backgroundColor: COLORS.PINK}]}>
+                <MaterialDesignIcons name='hand-coin-outline' size={24} color={COLORS.DARK} />
+                <Text style={[ styles.buttonText ]}> Utang </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.button, {backgroundColor: COLORS.BLUE}]}>
+                <MaterialDesignIcons name='cash-fast' size={24} color={COLORS.DARK} />
+                <Text style={[ styles.buttonText ]}> Payment </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.button, {backgroundColor: COLORS.PRIMARY}]}>
+                <MaterialDesignIcons name='account-group' size={24} color={COLORS.DARK} />
+                <Text style={[ styles.buttonText ]}> Customer </Text>
+              </TouchableOpacity>
+        </View>
       </SafeAreaView>
     </SafeAreaProvider>
   )
 }
+
+const styles = StyleSheet.create({
+  button:{
+    gap: 4,
+    borderRadius: 6,
+    paddingVertical: 12,
+    alignItems: "center",
+    flexDirection: "row",
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+  },
+  buttonText:{
+    color: COLORS.DARK,
+    fontFamily: FONTS.BOLD,
+  }
+})
 
 export default AddScreen

@@ -14,7 +14,7 @@ const LoginScreen = () => {
 
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
-  const [errors, setErrors ] = useState({});
+  const [ errors, setErrors ] = useState({});
 
   const [ togglePassword, setTogglePassword] = useState(true);
   const [ toggleEye, setToggleEye ] = useState("eye-off");

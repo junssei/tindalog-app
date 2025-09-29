@@ -30,6 +30,7 @@ const CustomerListScreen = () => {
         paddingVertical: 42,
         paddingHorizontal: 42,
         backgroundColor: "#FFFFFF",
+        marginBottom: 160,
         }}>
           <View style={{
             flexDirection: "row",
@@ -50,25 +51,22 @@ const CustomerListScreen = () => {
             />
           </View>
           <FlatList
-          scrollEnabled
+          style={{ height: "100%", }}
           data={ customer }
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <View>
                 <View>
                 <Image
-                  source={
-                    item.c_gender == 'Male'
-                    ? require('../../assets/profiles/male.png')
-                    : item.c_gender == 'Female'
-                    ? require('../../assets/profiles/female.png')
-                    : require('../../assets/profiles/default.png')
+                  source={ item.c_gender === "Male" ? require('../../assets/profiles/male.png') : item.c_gender === "Female" ? require('../../assets/profiles/female.png') : require('../../assets/profiles/default.png') }
+                  style={{ width: 64, height: 64 }
                   }
-                  style={{ width: 64, height: 64 }}
                 />
                 </View>
               <Text>{item.c_fullname}</Text>
               <Text>{item.c_gender}</Text>
+              {item.amount === 1000 ? <Text>Naay Utang</Text> : <Text>No Balance</Text> }
+              <Text>{item.amount}</Text>
             </View>
           )}
           />

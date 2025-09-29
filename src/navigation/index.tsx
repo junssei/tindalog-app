@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack'
@@ -20,6 +21,7 @@ import CustomerListScreen from '../screens/tabs/CustomerListScreen';
 import AddScreen from '../screens/tabs/AddScreen';
 import HistoryScreen from '../screens/tabs/HistoryScreen';
 import AccountScreen from '../screens/tabs/AccountScreen';
+import NotificationScreen from '../screens/tabs/NotificationScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -91,29 +93,64 @@ const StackNavigation = () => {
           headerShown: false,
         }}/>
 
+        <Stack.Group>
+          <Stack.Screen
+          name={SCREENS.ADDSCREEN}
+          component={AddScreen}
+          options={{
+            presentation: "transparentModal",
+            headerMode: "screen",
+            headerShown: false,
+            animation: 'fade',
+          }}
+          />
+        </Stack.Group>
+
         <Stack.Screen
-        name={SCREENS.ADDSCREEN}
-        component={AddScreen}
-        options={{ presentation: "modal" }}
+        name={SCREENS.NOTIFICATIONSCREEN}
+        component={NotificationScreen}
+        options={{
+          headerShown: true,
+          headerBackButtonDisplayMode: "minimal",
+        }}
         />
     </Stack.Navigator>
   )
 }
 
 const TabNavigation = () => {
+  const navigation = useNavigation();
+
   return <Tab.Navigator
     screenOptions={{
       tabBarStyle:{
-      position: "absolute",
+        paddingTop: 16,
+        paddingBottom: 8,
+        height: 80,
+        position: "absolute",
+      },
+      tabBarAllowFontScaling:true,
+      tabBarItemStyle: {
+        borderRadius: 16,
+        marginHorizontal: 6,
       },
       tabBarLabelStyle:{
         fontSize: 10,
         color: COLORS.DARK,
         fontFamily: FONTS.MEDIUM, 
       },
-      tabBarActiveBackgroundColor:COLORS.PRIMARY,
+      tabBarActiveBackgroundColor: COLORS.PRIMARY,
+      tabBarInactiveTintColor: 'rgba(0,0,0,0)',
       animation: 'shift',
       headerTitleStyle: { fontFamily: FONTS.BOLD },
+      headerRight: () => (
+        <TouchableOpacity>
+          <Icon name='notifications' size={24} color={COLORS.DARK} />
+        </TouchableOpacity>
+      ),
+      headerRightContainerStyle: {
+        paddingRight: 15,
+      },
     }}
   >
     <Tab.Screen 
@@ -122,7 +159,11 @@ const TabNavigation = () => {
       options={{
         title: "Home",
         tabBarIcon: ({focused}) => (
-          <Icon name='home' size={24} color={COLORS.DARK} />
+          <Icon
+          name={focused ? 'home' : 'home-outline'}
+          size={24}
+          color={COLORS.DARK}
+          />
         ),
         headerShown: false,
       }}
@@ -133,22 +174,25 @@ const TabNavigation = () => {
       options={{
         title: "Customer",
         tabBarIcon: ({focused}) => (
-          <Icon name='people' size={24} color={COLORS.DARK} />
+          <Icon name={focused ? 'people' : 'people-outline'} size={24} color={COLORS.DARK} />
         ),
-        headerRight: () => (
-          <TouchableOpacity>
-            <Icon name='notifications' size={24} color={COLORS.DARK} />
-          </TouchableOpacity>
-        )
       }}
     />
     <Tab.Screen 
       name={SCREENS.TEMPADD}
       component={AddScreen}
       options={{
-        title: "Add",
+        tabBarLabel: () => null,
+        tabBarShowLabel: false,
         tabBarIcon: ({focused}) => (
-          <Icon name='add-circle' size={24} color={COLORS.DARK} />
+          <Icon
+          name='add-circle'
+          size={64}
+          color={COLORS.DARK}
+          style={{
+            margin: -16,
+          }}
+          />
         )
       }}
       listeners={({ navigation }) => ({
@@ -164,7 +208,7 @@ const TabNavigation = () => {
       options={{
         title: "History",
         tabBarIcon: ({focused}) => (
-          <Icon name='time' size={24} color={COLORS.DARK} />
+          <Icon name={focused ? 'time' : 'time-outline'} size={24} color={COLORS.DARK} />
         )
       }}
     />
@@ -174,7 +218,7 @@ const TabNavigation = () => {
       options={{
         title: "Account",
         tabBarIcon: ({focused}) => (
-          <Icon name='person' size={24} color={COLORS.DARK} />
+          <Icon name={focused ? 'person' : 'person-outline'} size={24} color={COLORS.DARK} />
         )
       }}
     />
