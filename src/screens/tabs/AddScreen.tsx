@@ -6,9 +6,11 @@ import FONTS from '../../constants/fonts';
 import COLORS from '../../constants/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
-import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 const AddScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <SafeAreaProvider style={{
       gap: 32,
@@ -24,6 +26,15 @@ const AddScreen = () => {
         borderRadius: 16,
         backgroundColor: "rgba(255,255,255,1)"
         }}>
+        <TouchableOpacity
+        onPress={ navigation.goBack }
+        style={{
+          position: 'absolute',
+          right: -15,
+          top: -18,
+        }}>
+          <Icon name='close' size={42} color={COLORS.PINK} />
+        </TouchableOpacity>
         <View style={{ gap: 16 }}>
           <TouchableOpacity style={[styles.button, {backgroundColor: COLORS.YELLOW}]}
               onPress={() => {
