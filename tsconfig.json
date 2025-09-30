@@ -3,8 +3,8 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "src/screens/auth/SignupScreen.tsx",
-    "src/screens/auth/LoginScreen.tsx",
+    "src/screens/auth/SignupScreen.jsx",
+    "src/screens/auth/LoginScreen.jsx",
     "src/screens/intro/WelcomeScreen.jsx",
     "src/screens/index.js",
     "src/screens/intro/OnBoardingScreen.jsx",
