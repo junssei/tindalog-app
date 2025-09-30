@@ -61,9 +61,9 @@ const LoginScreen = () => {
           await AsyncStorage.setItem("userData", JSON.stringify(data.user));
           
           navigation.navigate("HOMESCREEN");
-          } else {
-            Alert.alert("Error", data.error || "Login failed");
-          }
+        } else {
+          Alert.alert("Error", data.error || "Login failed");
+        }
       } catch (err) {
         console.error(err);
         Alert.alert("Error", "Something went wrong");

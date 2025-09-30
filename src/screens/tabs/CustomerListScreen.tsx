@@ -1,4 +1,5 @@
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, FlatList } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import FONTS from '../../constants/fonts';
@@ -17,12 +18,35 @@ const CustomerListScreen = () => {
   const [customer, setCustomer] = useState<Customer[]>([])
   const [query, setQuery] = useState('')
 
-  useEffect(() => {
-    fetch("https://tl-backend-07ks.onrender.com/customers")
-      .then((res) => res.json())
-      .then((data) => setCustomer(data))
-      .catch((err) => console.error("Error fetching users:", err));
-  }, []);
+    // Get user data
+  const [user, setUser] = useState<any>(null);
+  React.useEffect(() => {
+    const loadUserData = async () => {
+      try{
+        const user_data = await AsyncStorage.getItem('userData');
+        if(user_data) setUser(JSON.parse(user_data));
+      } catch (err) {
+        console.error("Failed to load user data", err);
+      }
+    };
+
+    loadUserData();
+
+    if (user?.id){
+      const url = `https://tl-backend-07ks.onrender.com/users/${user.id}/customerlist`;
+  
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          if (Array.isArray(data)) {
+            setCustomer(data);
+          } else {
+            setCustomer(data.data || []);
+          }
+        })
+        .catch((err) => console.error("Error fetching users:", err));
+    }
+  }, [user]);
 
   return (
     <SafeAreaProvider>
@@ -39,10 +63,9 @@ const CustomerListScreen = () => {
             />
           </View>
         </View>
-
         <FlatList
           contentContainerStyle={{ paddingBottom: 220, paddingTop: 12 }}
-          data={customer.filter(c => c.c_fullname.toLowerCase().includes(query.toLowerCase()))}
+          data={ customer.filter(c => c.c_fullname.toLowerCase().includes(query.toLowerCase()))}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <TouchableOpacity activeOpacity={0.85} style={styles.card}>
@@ -73,6 +96,11 @@ const CustomerListScreen = () => {
                 <Text style={styles.transactionButtonText}>+ Transaction</Text>
               </TouchableOpacity>
             </TouchableOpacity>
+          )}
+          ListEmptyComponent={() => (
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+              <Text style={{ fontSize: 16, color: "gray" }}>No rows found</Text>
+            </View>
           )}
         />
       </SafeAreaView>
