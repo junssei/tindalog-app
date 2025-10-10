@@ -45,7 +45,7 @@ const LoginScreen = () => {
   const handleLogin = async () => {
     if(validationForm()){
       try {
-        const res = await fetch("https://tl-backend-07ks.onrender.com/auth/login", {
+        const res = await fetch("https://tindalog-backend.up.railway.app/auth/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),

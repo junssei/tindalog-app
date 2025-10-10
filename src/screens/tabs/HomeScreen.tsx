@@ -86,9 +86,10 @@ const HomeScreen = () => {
             alignItems: 'center',
           }}>
             <Image
-            source={require('../../assets/profiles/chubbyadmin.png')}
+            source={require(`../../assets/profiles/chubbyadmin.png`)}
             style={{ width: 42, height: 42 }}
             />
+           
             <View>
               <Text style={{
                 fontSize: 14,
@@ -101,7 +102,7 @@ const HomeScreen = () => {
                     fontSize: 16,
                     fontFamily: FONTS.BOLD,
                     textTransform: "capitalize",
-                  }}> {user.name} </Text>
+                  }}> {user.name} {user.role} </Text>
                 </>
                 ) : (
                   <Text>Loading user...</Text>

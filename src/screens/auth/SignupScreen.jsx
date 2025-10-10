@@ -49,7 +49,7 @@ const SignupScreen = () => {
   const handleRegister = async () => {
     if(validationForm()){
       try {
-        const res = await fetch("https://tl-backend-07ks.onrender.com/auth/register", {
+        const res = await fetch("https://tindalog-backend.up.railway.app/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, email, password }),
