@@ -1,6 +1,6 @@
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, FlatList } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, FlatList, RefreshControl, ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import FONTS from '../../constants/fonts';
 import COLORS from '../../constants/colors';
@@ -18,7 +18,7 @@ const CustomerListScreen = () => {
   const [customer, setCustomer] = useState<Customer[]>([])
   const [query, setQuery] = useState('')
 
-    // Get user data
+  // Get user data
   const [user, setUser] = useState<any>(null);
   React.useEffect(() => {
     const loadUserData = async () => {
@@ -47,7 +47,14 @@ const CustomerListScreen = () => {
         .catch((err) => console.error("Error fetching users:", err));
     }
   }, [user]);
+  const [refreshing, setRefreshing] = React.useState(false);
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
@@ -63,7 +70,9 @@ const CustomerListScreen = () => {
             />
           </View>
         </View>
-        <FlatList
+        <FlatList refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           contentContainerStyle={{ paddingBottom: 220, paddingTop: 12 }}
           data={ customer.filter(c => c.c_fullname.toLowerCase().includes(query.toLowerCase()))}
           keyExtractor={(item) => item.id.toString()}

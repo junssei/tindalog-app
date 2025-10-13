@@ -1,12 +1,12 @@
 import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets, } from 'react-native-safe-area-context';
-import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, Dimensions, Alert, BackHandler } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, Dimensions, Alert, BackHandler, RefreshControl, ScrollView } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useEffect, useState, useCallback } from 'react'
-import { ScrollView } from 'react-native-gesture-handler';
 import FONTS from '../../constants/fonts';
 import COLORS from '../../constants/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const HomeScreen = () => {
   useFocusEffect(
@@ -69,10 +69,20 @@ const HomeScreen = () => {
 
     loadUserData();
   }, [])
+  
+  const [refreshing, setRefreshing] = React.useState(false);
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
   return (
     <SafeAreaProvider>
-      <ScrollView>
+      <ScrollView refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <SafeAreaView style={{
           gap: 32,
           paddingTop: 42,
@@ -102,7 +112,7 @@ const HomeScreen = () => {
                     fontSize: 16,
                     fontFamily: FONTS.BOLD,
                     textTransform: "capitalize",
-                  }}> {user.name} {user.role} </Text>
+                  }}> {user.name} - {user.role} </Text>
                 </>
                 ) : (
                   <Text>Loading user...</Text>
