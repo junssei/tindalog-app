@@ -5,8 +5,8 @@ const add_sale = () => {
   return (
     <View>
       <Text>add_sale</Text>
-    </View>
+    </View> 
   )
 }
 
-export default add_sale
+export default add_sale  
