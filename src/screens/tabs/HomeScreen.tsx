@@ -7,6 +7,13 @@ import COLORS from '../../constants/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+type Customer = {
+  id: number;
+  c_fullname: string;
+  c_gender: string;
+  amount?: number;
+  credit?: number;
+};
 
 const HomeScreen = () => {
   useFocusEffect(
@@ -54,7 +61,8 @@ const HomeScreen = () => {
       return 'Good Evening!';
     }
   };
-
+  
+  const [customer, setCustomer] = useState<Customer[]>([])
   // Get user data
   const [user, setUser] = useState<any>(null);
   React.useEffect(() => {
@@ -68,7 +76,22 @@ const HomeScreen = () => {
     };
 
     loadUserData();
-  }, [])
+
+    if (user?.id){
+      const url = `https://tindalog-backend.up.railway.app/users/${user.id}/customerlist`;
+  
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          if (Array.isArray(data)) {
+            setCustomer(data);
+          } else {
+            setCustomer(data.data || []);
+          }
+        })
+        .catch((err) => console.error("Error fetching users:", err));
+    }
+  }, [user])
   
   const [refreshing, setRefreshing] = React.useState(false);
 
