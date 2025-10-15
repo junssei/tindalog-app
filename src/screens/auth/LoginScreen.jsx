@@ -60,7 +60,11 @@ const LoginScreen = () => {
           await AsyncStorage.setItem("isLoggedIn", "true");
           await AsyncStorage.setItem("userData", JSON.stringify(data.user));
           
-          navigation.navigate("HOMESCREEN");
+          if(data.user.role === "admin"){
+            navigation.navigate("DASHBOARD");
+          } else {
+            navigation.navigate("HOMESCREEN");
+          }
         } else {
           Alert.alert("Error", data.error || "Login failed");
         }
@@ -163,16 +167,22 @@ const LoginScreen = () => {
               <TouchableOpacity onPress={() => {
                 navigation.navigate("SIGNUP");
               }}>
-                <Text style={{
-                  fontFamily: FONTS.REGULAR,
-                  textAlign: "center",
-                  fontSize: 18,
-                }}> Don't have an Account?
-                    <Text style={{
+                <Text
+                  style={{
+                    fontFamily: FONTS.REGULAR,
+                    textAlign: "center",
+                    fontSize: 18,
+                  }}
+                >
+                  Don't have an Account?{" "}
+                  <Text
+                    style={{
                       fontFamily: FONTS.MEDIUM,
                       fontSize: 18,
-                    }
-                  }> Register </Text>
+                    }}
+                  >
+                    Register
+                  </Text>
                 </Text>
               </TouchableOpacity>
             </View>

@@ -15,6 +15,7 @@ type Customer = {
 };
 
 const CustomerListScreen = () => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const [customer, setCustomer] = useState<Customer[]>([])
   const [query, setQuery] = useState('')
 
@@ -47,7 +48,6 @@ const CustomerListScreen = () => {
         .catch((err) => console.error("Error fetching users:", err));
     }
   }, [user]);
-  const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);

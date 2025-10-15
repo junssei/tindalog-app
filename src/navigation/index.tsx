@@ -23,8 +23,15 @@ import HistoryScreen from '../screens/tabs/HistoryScreen';
 import AccountScreen from '../screens/tabs/AccountScreen';
 import NotificationScreen from '../screens/tabs/NotificationScreen';
 
-const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
+import AddCustomer from '../screens/form/add_customer';
+import AddPayment from '../screens/form/add_payment';
+import AddUtang from '../screens/form/add_utang';
+import AddSale from '../screens/form/add_sale';
+
+
+const AdminStack = createStackNavigator();
+const UserStack = createStackNavigator();
+const UserTab = createBottomTabNavigator();
 
 const StackNavigation = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -61,16 +68,16 @@ const StackNavigation = () => {
   }
 
   return (
-    <Stack.Navigator initialRouteName={initialRoute}>
-        <Stack.Screen
+    <UserStack.Navigator initialRouteName={initialRoute}>
+        <UserStack.Screen
         name={SCREENS.INTRO}
         component={OnBoardingScreen}
         options={{headerShown: false}}/>
-        <Stack.Screen
+        <UserStack.Screen
         name={SCREENS.WELCOME}
         component={WelcomeScreen}
         options={{headerShown: false}}/>
-        <Stack.Screen
+        <UserStack.Screen
         name={SCREENS.LOGIN}
         component={LoginScreen}
         options={{
@@ -78,7 +85,7 @@ const StackNavigation = () => {
           headerShown: true,
           headerBackButtonDisplayMode: "minimal",
         }}/>
-        <Stack.Screen
+        <UserStack.Screen
         name={SCREENS.SIGNUP}
         component={SignupScreen}
         options={{
@@ -86,15 +93,15 @@ const StackNavigation = () => {
           headerShown: true,
           headerBackButtonDisplayMode: "minimal",
         }}/>
-        <Stack.Screen
+        <UserStack.Screen
         name={SCREENS.HOMESCREEN}
         component={TabNavigation}
         options={{
           headerShown: false,
         }}/>
 
-        <Stack.Group>
-          <Stack.Screen
+        <UserStack.Group>
+          <UserStack.Screen
           name={SCREENS.ADDSCREEN}
           component={AddScreen}
           options={{
@@ -104,9 +111,9 @@ const StackNavigation = () => {
             animation: 'fade',
           }}
           />
-        </Stack.Group>
+        </UserStack.Group>
 
-        <Stack.Screen
+        <UserStack.Screen
         name={SCREENS.NOTIFICATIONSCREEN}
         component={NotificationScreen}
         options={{
@@ -114,14 +121,47 @@ const StackNavigation = () => {
           headerBackButtonDisplayMode: "minimal",
         }}
         />
-    </Stack.Navigator>
+
+        <UserStack.Screen
+        name={SCREENS.ADDPAYMENTSCREEN}
+        component={AddPayment}
+        options={{
+          headerShown: true,
+          headerBackButtonDisplayMode: "minimal",
+        }}
+        />
+        <UserStack.Screen
+        name={SCREENS.ADDUTANGSCREEN}
+        component={AddUtang}
+        options={{
+          headerShown: true,
+          headerBackButtonDisplayMode: "minimal",
+        }}
+        />
+        <UserStack.Screen
+        name={SCREENS.ADDSALESCREEN}
+        component={AddSale}
+        options={{
+          headerShown: true,
+          headerBackButtonDisplayMode: "minimal",
+        }}
+        />
+        <UserStack.Screen
+        name={SCREENS.ADDCUSTOMERSCREEN}
+        component={AddCustomer}
+        options={{
+          headerShown: false,
+          headerBackButtonDisplayMode: "minimal",
+        }}
+        />
+    </UserStack.Navigator>
   )
 }
 
 const TabNavigation = () => {
   const navigation = useNavigation();
 
-  return <Tab.Navigator
+  return <UserTab.Navigator
     screenOptions={{
       tabBarStyle:{
         paddingTop: 16,
@@ -144,7 +184,7 @@ const TabNavigation = () => {
       animation: 'shift',
       headerTitleStyle: { fontFamily: FONTS.BOLD },
       headerRight: () => (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate(SCREENS.NOTIFICATIONSCREEN)} style={{ marginRight: 15 }}>
           <Icon name='notifications' size={24} color={COLORS.DARK} />
         </TouchableOpacity>
       ),
@@ -153,7 +193,7 @@ const TabNavigation = () => {
       },
     }}
   >
-    <Tab.Screen 
+    <UserTab.Screen 
       name={SCREENS.HOMESCREEN}
       component={HomeScreen}
       options={{
@@ -168,7 +208,7 @@ const TabNavigation = () => {
         headerShown: false,
       }}
     />
-    <Tab.Screen 
+    <UserTab.Screen 
       name={SCREENS.CUSTOMERLISTSCREEN}
       component={CustomerListScreen}
       options={{
@@ -178,7 +218,7 @@ const TabNavigation = () => {
         ),
       }}
     />
-    <Tab.Screen 
+    <UserTab.Screen 
       name={SCREENS.TEMPADD}
       component={AddScreen}
       options={{
@@ -202,7 +242,7 @@ const TabNavigation = () => {
         },
       })}
     />
-    <Tab.Screen 
+    <UserTab.Screen 
       name={SCREENS.HISTORYSCREEN}
       component={HistoryScreen}
       options={{
@@ -212,7 +252,7 @@ const TabNavigation = () => {
         )
       }}
     />
-    <Tab.Screen 
+    <UserTab.Screen 
       name={SCREENS.ACCOUNTSCREEN}
       component={AccountScreen}
       options={{
@@ -222,7 +262,7 @@ const TabNavigation = () => {
         )
       }}
     />
-  </Tab.Navigator>
+  </UserTab.Navigator>
 }
 
 export default StackNavigation

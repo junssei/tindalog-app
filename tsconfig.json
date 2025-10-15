@@ -10,6 +10,6 @@
     "src/screens/intro/OnBoardingScreen.jsx",
     "src/assets/images/index.js",
     "src/screens/tabs/AccountScreen.jsx"
-  ],
+, "src/screens/form/add_customer.jsx"  ],
   "exclude": ["**/node_modules", "**/Pods"]
 }
