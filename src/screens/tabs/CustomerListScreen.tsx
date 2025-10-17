@@ -129,7 +129,10 @@ const CustomerListScreen = () => {
                     ? `${item.amount}`
                     : 'No Balance'}
                 </Text>
-                <Text style={styles.credit}>Credit: 1000</Text>
+                <Text style={styles.credit}>
+                  Credit: {item.credit ?? 1000}
+                  {item.credit ? '' : ' (Max)'}
+                </Text>
               </View>
 
               <View style={styles.divider} />
