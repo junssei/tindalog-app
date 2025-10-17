@@ -1,7 +1,23 @@
-import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets, } from 'react-native-safe-area-context';
-import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, Dimensions, Alert, BackHandler, RefreshControl, ScrollView } from 'react-native'
+import {
+  SafeAreaProvider,
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+  Dimensions,
+  Alert,
+  BackHandler,
+  RefreshControl,
+  ScrollView,
+} from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback } from 'react';
 import FONTS from '../../constants/fonts';
 import COLORS from '../../constants/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -26,18 +42,18 @@ const HomeScreen = () => {
             { text: 'Cancel', style: 'cancel' },
             { text: 'YES', onPress: () => BackHandler.exitApp() },
           ],
-          { cancelable: false }
+          { cancelable: false },
         );
         return true; // block default behavior
       };
 
       const backHandler = BackHandler.addEventListener(
         'hardwareBackPress',
-        onBackPress
+        onBackPress,
       );
 
       return () => backHandler.remove();
-    }, [])
+    }, []),
   );
 
   // Time
@@ -61,38 +77,38 @@ const HomeScreen = () => {
       return 'Good Evening!';
     }
   };
-  
-  const [customer, setCustomer] = useState<Customer[]>([])
+
+  const [customer, setCustomer] = useState<Customer[]>([]);
   // Get user data
   const [user, setUser] = useState<any>(null);
   React.useEffect(() => {
     const loadUserData = async () => {
-      try{
+      try {
         const user_data = await AsyncStorage.getItem('userData');
-        if(user_data) setUser(JSON.parse(user_data));
+        if (user_data) setUser(JSON.parse(user_data));
       } catch (err) {
-        console.error("Failed to load user data", err);
+        console.error('Failed to load user data', err);
       }
     };
 
     loadUserData();
 
-    if (user?.id){
+    if (user?.id) {
       const url = `https://tindalog-backend.up.railway.app/users/${user.id}/customerlist`;
-  
+
       fetch(url)
-        .then((res) => res.json())
-        .then((data) => {
+        .then(res => res.json())
+        .then(data => {
           if (Array.isArray(data)) {
             setCustomer(data);
           } else {
             setCustomer(data.data || []);
           }
         })
-        .catch((err) => console.error("Error fetching users:", err));
+        .catch(err => console.error('Error fetching users:', err));
     }
-  }, [user])
-  
+  }, [user]);
+
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -103,146 +119,192 @@ const HomeScreen = () => {
   }, []);
   return (
     <SafeAreaProvider>
-      <ScrollView refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
-        <SafeAreaView style={{
-          gap: 32,
-          paddingTop: 42,
-          paddingBottom: 220,
-          paddingHorizontal: 42,
-          backgroundColor: "#FFFFFF",
-          }}>
-          <View style={{
-            gap: 12,
-            flexDirection: "row",
-            alignItems: 'center',
-          }}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        <SafeAreaView
+          style={{
+            gap: 32,
+            paddingTop: 42,
+            paddingBottom: 220,
+            paddingHorizontal: 42,
+            backgroundColor: '#FFFFFF',
+          }}
+        >
+          <View
+            style={{
+              gap: 12,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
             <Image
-            source={require(`../../assets/profiles/chubbyadmin.png`)}
-            style={{ width: 42, height: 42 }}
+              source={require(`../../assets/profiles/chubbyadmin.png`)}
+              style={{ width: 42, height: 42 }}
             />
-           
+
             <View>
-              <Text style={{
-                fontSize: 14,
-                fontFamily: FONTS.LIGHT,
-                textTransform: "capitalize",
-              }}> { getGreeting() } </Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontFamily: FONTS.LIGHT,
+                  textTransform: 'capitalize',
+                }}
+              >
+                {' '}
+                {getGreeting()}{' '}
+              </Text>
               {user ? (
                 <>
-                  <Text style={{
-                    fontSize: 16,
-                    fontFamily: FONTS.BOLD,
-                    textTransform: "capitalize",
-                  }}> {user.name} - {user.role} </Text>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontFamily: FONTS.BOLD,
+                      textTransform: 'capitalize',
+                    }}
+                  >
+                    {' '}
+                    {user.name} - {user.role}{' '}
+                  </Text>
                 </>
-                ) : (
-                  <Text>Loading user...</Text>
+              ) : (
+                <Text>Loading user...</Text>
               )}
             </View>
           </View>
-          <View style={[styles.section, ]}>
+          <View style={[styles.section]}>
             <Text style={[styles.sectionTitleHeader]}> Total </Text>
-            <View style={[styles.card, {backgroundColor: COLORS.PRIMARY}]}>
-              <Icon name='home' size={32} color={COLORS.DARK} />
-              <View style={[styles.cardTextSection, {alignItems:"center"}]}>
-                <Text style={{fontFamily: FONTS.REGULAR,fontSize: 24, }}> 5 </Text>
-                <Text style={{fontFamily: FONTS.LIGHT, fontSize: 16, }}> Customers </Text>
+            <View style={[styles.card, { backgroundColor: COLORS.PRIMARY }]}>
+              <Icon name="home" size={32} color={COLORS.DARK} />
+              <View style={[styles.cardTextSection, { alignItems: 'center' }]}>
+                <Text style={{ fontFamily: FONTS.REGULAR, fontSize: 24 }}>
+                  {' '}
+                  5{' '}
+                </Text>
+                <Text style={{ fontFamily: FONTS.LIGHT, fontSize: 16 }}>
+                  {' '}
+                  Customers{' '}
+                </Text>
               </View>
             </View>
-            <View style={[styles.card, {backgroundColor: COLORS.PINK}]}>
-              <Icon name='cash' size={32} color={COLORS.DARK} />
-              <View style={[styles.cardTextSection, {alignItems:"center"}]}>
-                <Text style={{fontFamily: FONTS.REGULAR,fontSize: 24, }}> 5 </Text>
-                <Text style={{fontFamily: FONTS.LIGHT, fontSize: 16, }}> Utang </Text>
+            <View style={[styles.card, { backgroundColor: COLORS.PINK }]}>
+              <Icon name="cash" size={32} color={COLORS.DARK} />
+              <View style={[styles.cardTextSection, { alignItems: 'center' }]}>
+                <Text style={{ fontFamily: FONTS.REGULAR, fontSize: 24 }}>
+                  {' '}
+                  5{' '}
+                </Text>
+                <Text style={{ fontFamily: FONTS.LIGHT, fontSize: 16 }}>
+                  {' '}
+                  Utang{' '}
+                </Text>
               </View>
             </View>
-            <View style={[styles.card, {backgroundColor: COLORS.YELLOW}]}>
-              <Icon name='pricetag' size={32} color={COLORS.DARK} />
-              <View style={[styles.cardTextSection, {alignItems:"center"}]}>
-                <Text style={{fontFamily: FONTS.REGULAR,fontSize: 24, }}> 5 </Text>
-                <Text style={{fontFamily: FONTS.LIGHT, fontSize: 16, }}> Today Sales </Text>
+            <View style={[styles.card, { backgroundColor: COLORS.YELLOW }]}>
+              <Icon name="pricetag" size={32} color={COLORS.DARK} />
+              <View style={[styles.cardTextSection, { alignItems: 'center' }]}>
+                <Text style={{ fontFamily: FONTS.REGULAR, fontSize: 24 }}>
+                  {' '}
+                  5{' '}
+                </Text>
+                <Text style={{ fontFamily: FONTS.LIGHT, fontSize: 16 }}>
+                  {' '}
+                  Today Sales{' '}
+                </Text>
               </View>
             </View>
           </View>
-          <View style={[styles.section, ]}>
+          <View style={[styles.section]}>
             <Text style={[styles.sectionTitleHeader]}> Quick Action </Text>
-            <View style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              alignContent: "center",
-              rowGap: 12,
-              flexWrap: "wrap",
-              flexDirection: "row",
-            }}>
-              <TouchableOpacity style={[styles.button, {backgroundColor: COLORS.YELLOW}]}
-              onPress={() => {
-                console.log("Hello World");
+            <View
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                alignContent: 'center',
+                rowGap: 12,
+                flexWrap: 'wrap',
+                flexDirection: 'row',
               }}
+            >
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: COLORS.YELLOW }]}
+                onPress={() => {
+                  console.log('Hello World');
+                }}
               >
-                <Icon name='add' size={24} color={COLORS.DARK} />
-                <Text style={[ styles.buttonText ]}> Sale </Text>
+                <Icon name="add" size={24} color={COLORS.DARK} />
+                <Text style={[styles.buttonText]}> Sale </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.button, {backgroundColor: COLORS.PINK}]}>
-                <Icon name='add' size={24} color={COLORS.DARK} />
-                <Text style={[ styles.buttonText ]}> Utang </Text>
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: COLORS.PINK }]}
+              >
+                <Icon name="add" size={24} color={COLORS.DARK} />
+                <Text style={[styles.buttonText]}> Utang </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.button, {backgroundColor: COLORS.BLUE}]}>
-                <Icon name='add' size={24} color={COLORS.DARK} />
-                <Text style={[ styles.buttonText ]}> Payment </Text>
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: COLORS.BLUE }]}
+              >
+                <Icon name="add" size={24} color={COLORS.DARK} />
+                <Text style={[styles.buttonText]}> Payment </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.button, {backgroundColor: COLORS.PRIMARY}]}>
-                <Icon name='add' size={24} color={COLORS.DARK} />
-                <Text style={[ styles.buttonText ]}> Customer </Text>
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: COLORS.PRIMARY }]}
+              >
+                <Icon name="add" size={24} color={COLORS.DARK} />
+                <Text style={[styles.buttonText]}> Customer </Text>
               </TouchableOpacity>
             </View>
           </View>
-          <View style={[styles.section, ]}>
-            <Text style={[styles.sectionTitleHeader]}> Recent Transactions </Text>
+          <View style={[styles.section]}>
+            <Text style={[styles.sectionTitleHeader]}>
+              {' '}
+              Recent Transactions{' '}
+            </Text>
           </View>
-          <View style={[styles.section, ]}>
+          <View style={[styles.section]}>
             <Text style={[styles.sectionTitleHeader]}> Top Utangers </Text>
           </View>
         </SafeAreaView>
       </ScrollView>
     </SafeAreaProvider>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
-  section:{
+  section: {
     gap: 12,
   },
-  sectionTitleHeader:{
+  sectionTitleHeader: {
     fontSize: 24,
     color: COLORS.DARK,
     fontFamily: FONTS.BOLD,
   },
-  card:{
+  card: {
     gap: 8,
     borderWidth: 3,
-    borderStyle: "solid",
+    borderStyle: 'solid',
     borderRadius: 24,
     padding: 16,
-    alignItems: "center",
+    alignItems: 'center',
   },
-  cardTextSection:{
+  cardTextSection: {
     gap: 0,
   },
-  button:{
+  button: {
     gap: 4,
     borderRadius: 6,
     paddingVertical: 4,
-    alignItems: "center",
-    flexDirection: "row",
+    alignItems: 'center',
+    flexDirection: 'row',
     paddingHorizontal: 12,
   },
-  buttonText:{
+  buttonText: {
     color: COLORS.DARK,
     fontFamily: FONTS.BOLD,
-  }
-})
+  },
+});
 
-export default HomeScreen
+export default HomeScreen;
