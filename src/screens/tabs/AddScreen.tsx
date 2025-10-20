@@ -25,7 +25,7 @@ import { useNavigation } from '@react-navigation/native';
 import SCREENS from '..';
 
 const AddScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   return (
     <SafeAreaProvider

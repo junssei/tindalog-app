@@ -9,7 +9,8 @@
     "src/screens/index.js",
     "src/screens/intro/OnBoardingScreen.jsx",
     "src/assets/images/index.js",
-    "src/screens/tabs/AccountScreen.jsx"
-, "src/screens/form/add_customer.jsx"  ],
+    "src/screens/tabs/AccountScreen.jsx",
+    "src/screens/form/add_customer.tsx"
+  ],
   "exclude": ["**/node_modules", "**/Pods"]
 }

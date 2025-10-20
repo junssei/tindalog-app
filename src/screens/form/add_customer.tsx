@@ -27,16 +27,17 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 const add_customer = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
 
-  const [user, setUser] = useState(null);
-  const userid = user ? user.id : null;
+  type User = { id: string; [key: string]: any } | null;
+  const [user, setUser] = useState<User>(null);
+  const userid = user?.id ?? null;
   const [name, setName] = useState('');
   const [phonenumber, setPhonenumber] = useState('');
   const [address, setAddress] = useState('');
-  const [error, setErrors] = useState('');
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [gender, setGender] = useState('');
 
   const OPTIONS = [
@@ -59,15 +60,15 @@ const add_customer = () => {
   }, []);
 
   const validationForm = () => {
-    let errors = {};
-    if (!name) errors.name = 'Fullname is required';
-    if (!phonenumber) errors.phonenumber = 'Phonenumber is required';
-    if (!address) errors.address = 'Address is required';
-    if (!gender) errors.gender = 'Gender is required';
+    const validationErrors: Record<string, string> = {};
+    if (!name) validationErrors.name = 'Fullname is required';
+    if (!phonenumber) validationErrors.phonenumber = 'Phonenumber is required';
+    if (!address) validationErrors.address = 'Address is required';
+    if (!gender) validationErrors.gender = 'Gender is required';
 
-    setErrors(errors);
+    setErrors(validationErrors);
 
-    return Object.keys(errors).length === 0;
+    return Object.keys(validationErrors).length === 0;
   };
 
   const handleCreate = async () => {
@@ -93,7 +94,8 @@ const add_customer = () => {
 
         if (res.ok) {
           Alert.alert('Success', 'Customer created successfully!');
-          navigation.navigate('CUSTOMERLISTSCREEN');
+          // navigation.navigate('CUSTOMERLISTSCREEN');
+          navigation.goBack();
           setButtonIsDisabled(false);
           setName('');
           setPhonenumber('');
@@ -149,6 +151,7 @@ const add_customer = () => {
                 <View style={[styles.inputContainer]}>
                   <Icon name="person" size={24} color={COLORS.DARK} />
                   <TextInput
+                    editable={!buttonIsDisabled}
                     placeholder="Customer Name"
                     placeholderTextColor={COLORS.DARKGRAY}
                     style={[
@@ -166,6 +169,7 @@ const add_customer = () => {
                 <View style={[styles.inputContainer]}>
                   <Icon name="call" size={24} color={COLORS.DARK} />
                   <TextInput
+                    editable={!buttonIsDisabled}
                     placeholder="Phone Number"
                     placeholderTextColor={COLORS.DARKGRAY}
                     style={[
@@ -183,6 +187,7 @@ const add_customer = () => {
                 <View style={[styles.inputContainer]}>
                   <Icon name="location" size={24} color={COLORS.DARK} />
                   <TextInput
+                    editable={!buttonIsDisabled}
                     placeholder="Address"
                     placeholderTextColor={COLORS.DARKGRAY}
                     style={[
@@ -203,7 +208,7 @@ const add_customer = () => {
                     placeholder="Select Gender"
                     options={OPTIONS}
                     value={gender}
-                    onSelect={setGender}
+                    onSelect={(value?: string) => setGender(value ?? '')}
                   />
                 </View>
                 <TouchableOpacity

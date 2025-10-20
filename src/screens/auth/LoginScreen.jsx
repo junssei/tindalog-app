@@ -75,9 +75,11 @@ const LoginScreen = () => {
           await AsyncStorage.setItem('userData', JSON.stringify(data.user));
 
           if (data.user.role === 'admin') {
-            navigation.navigate('DASHBOARD');
-          } else {
+            navigation.navigate('DASHBOARDSCREEN');
+          } else if (data.user.role === 'shopkeeper') {
             navigation.navigate('HOMESCREEN');
+          } else {
+            Alert.alert('No user found, please register.');
           }
         } else {
           Alert.alert('Error', data.error || 'Login failed');

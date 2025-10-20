@@ -67,7 +67,7 @@ const SignupScreen = () => {
     if (validationForm()) {
       try {
         const res = await fetch(
-          'https://tindalog-backend.up.railway.app/customers/create',
+          'https://tindalog-backend.up.railway.app/auth/register',
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
