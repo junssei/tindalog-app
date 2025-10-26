@@ -18,10 +18,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 type Users = {
   id: number;
+  role: string;
   email: string;
+  gender: string;
   username: string;
   tindahan_name: string;
-  role: string;
 };
 
 const UserListScreen = () => {

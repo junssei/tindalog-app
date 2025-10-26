@@ -1,8 +1,4 @@
-import {
-  SafeAreaProvider,
-  SafeAreaView,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import {
   View,
   Text,
@@ -115,15 +111,7 @@ const add_customer = () => {
     <SafeAreaProvider>
       <PaperProvider>
         <ScrollView>
-          <SafeAreaView
-            style={{
-              gap: 32,
-              paddingTop: 42,
-              paddingBottom: 220,
-              paddingHorizontal: 42,
-              backgroundColor: '#FFFFFF',
-            }}
-          >
+          <SafeAreaView style={styles.container}>
             <View
               style={{
                 gap: 12,
@@ -240,6 +228,14 @@ const add_customer = () => {
 export default add_customer;
 
 const styles = StyleSheet.create({
+  container: {
+    gap: 32,
+    paddingTop: 42,
+    paddingBottom: 220,
+    paddingHorizontal: 42,
+    backgroundColor: '#FFFFFF',
+  },
+
   error: {
     fontSize: 16,
     color: COLORS.PINK,

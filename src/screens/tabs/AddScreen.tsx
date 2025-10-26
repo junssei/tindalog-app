@@ -101,6 +101,13 @@ const AddScreen = () => {
             />
             <Text style={[styles.buttonText]}> Customer </Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: COLORS.ORANGE }]}
+            onPress={() => navigation.navigate(SCREENS.ADDCUSTOMERSCREEN)}
+          >
+            <MaterialDesignIcons name="egg" size={24} color={COLORS.DARK} />
+            <Text style={[styles.buttonText]}> Products </Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>

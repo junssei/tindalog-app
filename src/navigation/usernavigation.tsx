@@ -14,7 +14,7 @@ import SCREENS from '../screens';
 import HomeScreen from '../screens/tabs/HomeScreen';
 import CustomerListScreen from '../screens/tabs/CustomerListScreen';
 import AddScreen from '../screens/tabs/AddScreen';
-import HistoryScreen from '../screens/tabs/HistoryScreen';
+import HistoryScreen from '../screens/tabs/ProductScreen';
 import AccountScreen from '../screens/tabs/AccountScreen';
 import NotificationScreen from '../screens/tabs/NotificationScreen';
 
@@ -22,6 +22,10 @@ import AddCustomer from '../screens/form/add_customer';
 import AddPayment from '../screens/form/add_payment';
 import AddUtang from '../screens/form/add_utang';
 import AddSale from '../screens/form/add_sale';
+import CustomerProfileScreen from '../screens/group/customer/CustomerProfileScreen';
+import EditCustomerProfileScreen from '../screens/group/customer/EditCustomerProfileScreen';
+import ProductScreen from '../screens/tabs/ProductScreen';
+import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
 
 const UserStack = createStackNavigator();
 const UserTab = createBottomTabNavigator();
@@ -50,12 +54,47 @@ const UserStackNavigation = () => {
         />
       </UserStack.Group>
 
+      <UserStack.Group>
+        <UserStack.Screen
+          name={SCREENS.VIEWCUSTOMERPROFILESCREEN}
+          component={CustomerProfileScreen}
+          options={{
+            headerShown: true,
+            headerTitleStyle: { fontFamily: FONTS.BOLD },
+            headerTitle: 'Customer Profile',
+            headerBackButtonDisplayMode: 'minimal',
+            headerBackImage: () => (
+              <Icon name="chevron-back" size={22} color={COLORS.DARK} />
+            ),
+          }}
+        />
+
+        <UserStack.Screen
+          name={SCREENS.EDITCUSTOMERPROFILESCREEN}
+          component={EditCustomerProfileScreen}
+          options={{
+            headerShown: true,
+            headerTitleStyle: { fontFamily: FONTS.BOLD },
+            headerTitle: 'Edit Customer Profile',
+            headerBackButtonDisplayMode: 'minimal',
+            headerBackImage: () => (
+              <Icon name="chevron-back" size={22} color={COLORS.DARK} />
+            ),
+          }}
+        />
+      </UserStack.Group>
+
       <UserStack.Screen
         name={SCREENS.NOTIFICATIONSCREEN}
         component={NotificationScreen}
         options={{
           headerShown: true,
+          headerTitle: 'NOTIFICATION',
           headerBackButtonDisplayMode: 'minimal',
+          headerTitleStyle: { fontFamily: FONTS.BOLD },
+          headerBackImage: () => (
+            <Icon name="chevron-back" size={22} color={COLORS.DARK} />
+          ),
         }}
       />
 
@@ -188,13 +227,13 @@ const UserTabNavigation = () => {
         })}
       />
       <UserTab.Screen
-        name={SCREENS.HISTORYSCREEN}
-        component={HistoryScreen}
+        name={SCREENS.PRODUCTSCREEN}
+        component={ProductScreen}
         options={{
-          title: 'History',
+          title: 'Products',
           tabBarIcon: ({ focused }) => (
-            <Icon
-              name={focused ? 'time' : 'time-outline'}
+            <MaterialDesignIcons
+              name={focused ? 'egg' : 'egg-outline'}
               size={24}
               color={COLORS.DARK}
             />

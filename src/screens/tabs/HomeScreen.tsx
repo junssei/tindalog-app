@@ -21,6 +21,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import FONTS from '../../constants/fonts';
 import COLORS from '../../constants/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Customer = {
@@ -117,6 +118,9 @@ const HomeScreen = () => {
       setRefreshing(false);
     }, 2000);
   }, []);
+
+  const navigation = useNavigation<any>();
+
   return (
     <SafeAreaProvider>
       <ScrollView
@@ -129,7 +133,7 @@ const HomeScreen = () => {
             gap: 32,
             paddingTop: 42,
             paddingBottom: 220,
-            paddingHorizontal: 42,
+            paddingHorizontal: 20,
             backgroundColor: '#FFFFFF',
           }}
         >
@@ -166,7 +170,7 @@ const HomeScreen = () => {
                     }}
                   >
                     {' '}
-                    {user.name} - {user.role}{' '}
+                    {user.username} - {user.role}{' '}
                   </Text>
                 </>
               ) : (
@@ -252,9 +256,16 @@ const HomeScreen = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, { backgroundColor: COLORS.PRIMARY }]}
+                onPress={() => navigation.navigate('ADDCUSTOMER')}
               >
                 <Icon name="add" size={24} color={COLORS.DARK} />
                 <Text style={[styles.buttonText]}> Customer </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: COLORS.PRIMARY }]}
+              >
+                <Icon name="add" size={24} color={COLORS.DARK} />
+                <Text style={[styles.buttonText]}> Products </Text>
               </TouchableOpacity>
             </View>
           </View>

@@ -11,15 +11,19 @@ import {
   RefreshControl,
   ScrollView,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
 import FONTS from '../../constants/fonts';
 import COLORS from '../../constants/colors';
+import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 
 type Customer = {
   id: number;
-  c_fullname: string;
   c_gender: string;
+  c_address: string;
+  c_fullname: string;
+  c_phonenumber: number;
+
   amount?: number;
   credit?: number;
 };
@@ -65,6 +69,9 @@ const CustomerListScreen = () => {
       setRefreshing(false);
     }, 2000);
   }, []);
+
+  const navigation = useNavigation<any>();
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
@@ -99,9 +106,9 @@ const CustomerListScreen = () => {
               <View style={styles.cardRow}>
                 <Image
                   source={
-                    item.c_gender === 'Male'
+                    item.c_gender === 'male'
                       ? require('../../assets/profiles/male.png')
-                      : item.c_gender === 'Female'
+                      : item.c_gender === 'female'
                       ? require('../../assets/profiles/female.png')
                       : require('../../assets/profiles/default.png')
                   }
@@ -113,7 +120,20 @@ const CustomerListScreen = () => {
                   <Text style={styles.subtitle}>Customer</Text>
                 </View>
 
-                <Icon name="chevron-forward" size={22} color={COLORS.DARK} />
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('VIEWCUSTOMERPROFILESCREEN', {
+                      userID: user.id,
+                      customerID: item.id,
+                      customerGender: item.c_gender,
+                      customerAddress: item.c_address,
+                      customerFullName: item.c_fullname,
+                      customerPhoneNumber: item.c_phonenumber,
+                    });
+                  }}
+                >
+                  <Icon name="chevron-forward" size={22} color={COLORS.DARK} />
+                </TouchableOpacity>
               </View>
 
               <View style={styles.rowBetween}>
@@ -147,6 +167,7 @@ const CustomerListScreen = () => {
               </TouchableOpacity>
             </TouchableOpacity>
           )}
+          // Empty
           ListEmptyComponent={() => (
             <View
               style={{
