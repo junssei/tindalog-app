@@ -11,6 +11,7 @@ import {
   BackHandler,
   RefreshControl,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useEffect, useState, useCallback } from 'react';
@@ -57,8 +58,8 @@ const add_customer = () => {
 
   const validationForm = () => {
     const validationErrors: Record<string, string> = {};
-    if (!name) validationErrors.name = 'Fullname is required';
-    if (!phonenumber) validationErrors.phonenumber = 'Phonenumber is required';
+    if (!name) validationErrors.name = 'Customer Name is required';
+    // if (!phonenumber) validationErrors.phonenumber = 'Phonenumber is required';
     if (!address) validationErrors.address = 'Address is required';
     if (!gender) validationErrors.gender = 'Gender is required';
 
@@ -99,6 +100,7 @@ const add_customer = () => {
           setErrors({});
         } else {
           Alert.alert('Error', data.error || 'Customer creation failed');
+          setButtonIsDisabled(false);
         }
       } catch (err) {
         console.error(err);
@@ -136,23 +138,28 @@ const add_customer = () => {
                   gap: 24,
                 }}
               >
-                <View style={[styles.inputContainer]}>
-                  <Icon name="person" size={24} color={COLORS.DARK} />
-                  <TextInput
-                    editable={!buttonIsDisabled}
-                    placeholder="Customer Name"
-                    placeholderTextColor={COLORS.DARKGRAY}
-                    style={[
-                      styles.input,
-                      {
-                        fontFamily: FONTS.MEDIUM,
-                        fontSize: 18,
-                        color: COLORS.DARK,
-                      },
-                    ]}
-                    onChangeText={setName}
-                    value={name}
-                  />
+                <View>
+                  <View style={[styles.inputContainer]}>
+                    <Icon name="person" size={24} color={COLORS.DARK} />
+                    <TextInput
+                      editable={!buttonIsDisabled}
+                      placeholder="Customer Name"
+                      placeholderTextColor={COLORS.DARKGRAY}
+                      style={[
+                        styles.input,
+                        {
+                          fontFamily: FONTS.MEDIUM,
+                          fontSize: 18,
+                          color: COLORS.DARK,
+                        },
+                      ]}
+                      onChangeText={setName}
+                      value={name}
+                    />
+                  </View>
+                  {errors.name ? (
+                    <Text style={styles.error}>{errors.name}</Text>
+                  ) : null}
                 </View>
                 <View style={[styles.inputContainer]}>
                   <Icon name="call" size={24} color={COLORS.DARK} />
@@ -171,24 +178,32 @@ const add_customer = () => {
                     onChangeText={setPhonenumber}
                     value={phonenumber}
                   />
+                  {errors.setPhonenumber ? (
+                    <Text style={styles.error}>{errors.setPhonenumber}</Text>
+                  ) : null}
                 </View>
-                <View style={[styles.inputContainer]}>
-                  <Icon name="location" size={24} color={COLORS.DARK} />
-                  <TextInput
-                    editable={!buttonIsDisabled}
-                    placeholder="Address"
-                    placeholderTextColor={COLORS.DARKGRAY}
-                    style={[
-                      styles.input,
-                      {
-                        fontFamily: FONTS.MEDIUM,
-                        fontSize: 18,
-                        color: COLORS.DARK,
-                      },
-                    ]}
-                    onChangeText={setAddress}
-                    value={address}
-                  />
+                <View>
+                  <View style={[styles.inputContainer]}>
+                    <Icon name="location" size={24} color={COLORS.DARK} />
+                    <TextInput
+                      editable={!buttonIsDisabled}
+                      placeholder="Address"
+                      placeholderTextColor={COLORS.DARKGRAY}
+                      style={[
+                        styles.input,
+                        {
+                          fontFamily: FONTS.MEDIUM,
+                          fontSize: 18,
+                          color: COLORS.DARK,
+                        },
+                      ]}
+                      onChangeText={setAddress}
+                      value={address}
+                    />
+                  </View>
+                  {errors.address ? (
+                    <Text style={styles.error}>{errors.address}</Text>
+                  ) : null}
                 </View>
                 <View style={[{ width: '100%' }]}>
                   <Dropdown
@@ -211,9 +226,12 @@ const add_customer = () => {
                 </TouchableOpacity>
                 <View>
                   {buttonIsDisabled ? (
-                    <Text style={[styles.error, { textAlign: 'center' }]}>
-                      Please wait...
-                    </Text>
+                    <View style={{ alignItems: 'center' }}>
+                      <ActivityIndicator size="small" color="#A2D2FF" />
+                      <Text style={[styles.error, { textAlign: 'center' }]}>
+                        Please wait...
+                      </Text>
+                    </View>
                   ) : null}
                 </View>
               </View>
@@ -239,8 +257,10 @@ const styles = StyleSheet.create({
   error: {
     fontSize: 16,
     color: COLORS.PINK,
+    textAlign: 'right',
     fontFamily: FONTS.MEDIUM,
   },
+
   inputContainer: {
     gap: 16,
     paddingVertical: 12,

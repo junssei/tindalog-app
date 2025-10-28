@@ -21,7 +21,7 @@ import { Dropdown } from 'react-native-paper-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import { Provider as PaperProvider } from 'react-native-paper';
 
-const EditCustomerProfileScreen = ({ route }) => {
+const EditProductScreen = ({ route }) => {
   const {
     userID,
     customerID,
@@ -64,7 +64,7 @@ const EditCustomerProfileScreen = ({ route }) => {
       try {
         setButtonIsDisabled(true);
         const res = await fetch(
-          'https://tindalog-backend.up.railway.app/customers/edit',
+          'https://tindalog-backend.up.railway.app/customers/update',
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -73,7 +73,6 @@ const EditCustomerProfileScreen = ({ route }) => {
               c_phonenumber: phonenumber,
               c_address: address,
               c_gender: gender,
-              userid: userid,
               id: customerid,
             }),
           },
@@ -83,7 +82,9 @@ const EditCustomerProfileScreen = ({ route }) => {
 
         if (res.ok) {
           Alert.alert('Success', 'Customer updated successfully!');
-          navigation.navigate('CUSTOMERLISTSCREEN');
+          navigation.navigate('HOMESCREEN', {
+            screen: 'CUSTOMERLISTSCREEN',
+          });
           setButtonIsDisabled(false);
           setPhonenumber('');
           setAddress('');
@@ -91,6 +92,7 @@ const EditCustomerProfileScreen = ({ route }) => {
           setName('');
         } else {
           Alert.alert('Error', data.error || 'Customer creation failed');
+          setButtonIsDisabled(false);
         }
       } catch (err) {
         console.error(err);
@@ -178,11 +180,15 @@ const EditCustomerProfileScreen = ({ route }) => {
                 Update Customer #{customerID}{' '}
               </Text>
             </TouchableOpacity>
+
             <View>
               {buttonIsDisabled ? (
-                <Text style={[styles.error, { textAlign: 'center' }]}>
-                  Please wait...
-                </Text>
+                <View style={{ alignItems: 'center' }}>
+                  <ActivityIndicator size="small" color="#A2D2FF" />
+                  <Text style={[styles.error, { textAlign: 'center' }]}>
+                    Please wait...
+                  </Text>
+                </View>
               ) : null}
             </View>
           </SafeAreaView>
@@ -270,4 +276,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EditCustomerProfileScreen;
+export default EditProductScreen;

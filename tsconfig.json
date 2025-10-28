@@ -9,10 +9,12 @@
     "src/screens/index.js",
     "src/screens/intro/OnBoardingScreen.jsx",
     "src/assets/images/index.js",
-    "src/screens/tabs/AccountScreen.jsx",
     "src/screens/form/add_customer.tsx",
     "src/screens/group/customer/CustomerProfileScreen.tsx",
-    "src/screens/group/customer/EditCustomerProfileScreen.tsx"
+    "src/screens/group/customer/EditCustomerProfileScreen.js",
+    "src/navigation/usernavigation.js",
+    "src/screens/tabs/AccountScreen.js",
+    "src/screens/admin/tabs/AccountScreen.js"
   ],
   "exclude": ["**/node_modules", "**/Pods"]
 }

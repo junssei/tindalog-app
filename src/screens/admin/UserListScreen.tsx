@@ -30,7 +30,7 @@ const UserListScreen = () => {
   const [query, setQuery] = useState('');
 
   React.useEffect(() => {
-    const url = `https://tindalog-backend.up.railway.app/users`;
+    const url = `https://tindalog-backend.up.railway.app/user/all`;
 
     fetch(url)
       .then(res => res.json())
@@ -78,9 +78,9 @@ const UserListScreen = () => {
               <View style={styles.cardRow}>
                 <Image
                   source={
-                    item.c_gender === 'Male'
+                    item.gender === 'Male'
                       ? require('../../assets/profiles/male.png')
-                      : item.c_gender === 'Female'
+                      : item.gender === 'Female'
                       ? require('../../assets/profiles/female.png')
                       : require('../../assets/profiles/default.png')
                   }

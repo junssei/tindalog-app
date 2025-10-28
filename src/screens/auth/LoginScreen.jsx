@@ -3,10 +3,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   View,
   Text,
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
   Alert,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import {
   SafeAreaProvider,
@@ -247,12 +247,12 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     gap: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 18,
     width: '100%',
     borderRadius: 6,
+    paddingVertical: 12,
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: 18,
     backgroundColor: COLORS.GRAY,
   },
 

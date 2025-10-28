@@ -103,7 +103,7 @@ const AddScreen = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, { backgroundColor: COLORS.ORANGE }]}
-            onPress={() => navigation.navigate(SCREENS.ADDCUSTOMERSCREEN)}
+            onPress={() => navigation.navigate(SCREENS.ADDPRODUCTSCREEN)}
           >
             <MaterialDesignIcons name="egg" size={24} color={COLORS.DARK} />
             <Text style={[styles.buttonText]}> Products </Text>

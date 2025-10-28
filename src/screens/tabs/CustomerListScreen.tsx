@@ -48,7 +48,7 @@ const CustomerListScreen = () => {
     loadUserData();
 
     if (user?.id) {
-      const url = `https://tindalog-backend.up.railway.app/users/${user.id}/customerlist`;
+      const url = `https://tindalog-backend.up.railway.app/user/${user.id}/customerlist`;
 
       fetch(url)
         .then(res => res.json())

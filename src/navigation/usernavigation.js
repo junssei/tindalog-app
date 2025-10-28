@@ -1,7 +1,20 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
-import { TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+  FlatList,
+  RefreshControl,
+  ScrollView,
+  Alert,
+  Linking,
+  ActivityIndicator,
+} from 'react-native';
 import FONTS from '../constants/fonts';
 import COLORS from '../constants/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -19,11 +32,16 @@ import AccountScreen from '../screens/tabs/AccountScreen';
 import NotificationScreen from '../screens/tabs/NotificationScreen';
 
 import AddCustomer from '../screens/form/add_customer';
+import AddProduct from '../screens/form/add_product';
 import AddPayment from '../screens/form/add_payment';
 import AddUtang from '../screens/form/add_utang';
 import AddSale from '../screens/form/add_sale';
 import CustomerProfileScreen from '../screens/group/customer/CustomerProfileScreen';
 import EditCustomerProfileScreen from '../screens/group/customer/EditCustomerProfileScreen';
+
+import ViewProductScreen from '../screens/group/product/ViewProductScreen';
+import EditProductScreen from '../screens/group/product/EditProductScreen';
+
 import ProductScreen from '../screens/tabs/ProductScreen';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
 
@@ -54,6 +72,37 @@ const UserStackNavigation = () => {
         />
       </UserStack.Group>
 
+      {/* Product CRUD Screen */}
+      <UserStack.Group>
+        <UserStack.Screen
+          name={SCREENS.VIEWPRODUCTSCREEN}
+          component={ViewProductScreen}
+          options={{
+            headerShown: true,
+            headerTitleStyle: { fontFamily: FONTS.BOLD },
+            headerTitle: 'Product',
+            headerBackButtonDisplayMode: 'minimal',
+            headerBackImage: () => (
+              <Icon name="chevron-back" size={22} color={COLORS.DARK} />
+            ),
+          }}
+        />
+        <UserStack.Screen
+          name={SCREENS.EDITPRODUCTSCREEN}
+          component={EditProductScreen}
+          options={{
+            headerShown: true,
+            headerTitleStyle: { fontFamily: FONTS.BOLD },
+            headerTitle: 'Edit Product',
+            headerBackButtonDisplayMode: 'minimal',
+            headerBackImage: () => (
+              <Icon name="chevron-back" size={22} color={COLORS.DARK} />
+            ),
+          }}
+        />
+      </UserStack.Group>
+
+      {/* Customer CRUD Screen */}
       <UserStack.Group>
         <UserStack.Screen
           name={SCREENS.VIEWCUSTOMERPROFILESCREEN}
@@ -130,21 +179,29 @@ const UserStackNavigation = () => {
           headerBackButtonDisplayMode: 'minimal',
         }}
       />
+      <UserStack.Screen
+        name={SCREENS.ADDPRODUCTSCREEN}
+        component={AddProduct}
+        options={{
+          headerShown: false,
+          headerBackButtonDisplayMode: 'minimal',
+        }}
+      />
     </UserStack.Navigator>
   );
 };
 
 const UserTabNavigation = () => {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation();
 
   return (
     <UserTab.Navigator
       screenOptions={{
         tabBarStyle: {
+          height: 80,
           paddingTop: 16,
           paddingBottom: 8,
-          height: 80,
-          position: 'absolute',
+          // position: 'absolute',
         },
         tabBarAllowFontScaling: true,
         tabBarItemStyle: {

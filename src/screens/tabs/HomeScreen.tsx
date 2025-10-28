@@ -80,7 +80,6 @@ const HomeScreen = () => {
   };
 
   const [customer, setCustomer] = useState<Customer[]>([]);
-  // Get user data
   const [user, setUser] = useState<any>(null);
   React.useEffect(() => {
     const loadUserData = async () => {
@@ -95,7 +94,7 @@ const HomeScreen = () => {
     loadUserData();
 
     if (user?.id) {
-      const url = `https://tindalog-backend.up.railway.app/users/${user.id}/customerlist`;
+      const url = `https://tindalog-backend.up.railway.app/user/${user.id}/customerlist`;
 
       fetch(url)
         .then(res => res.json())
@@ -279,6 +278,26 @@ const HomeScreen = () => {
             <Text style={[styles.sectionTitleHeader]}> Top Utangers </Text>
           </View>
         </SafeAreaView>
+        <View
+          style={{
+            // borderTopWidth: 1,
+            paddingVertical: 32,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: COLORS.DARK,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 12,
+              color: '#999999',
+              textAlign: 'center',
+              fontFamily: FONTS.MEDIUM,
+            }}
+          >
+            © {new Date().getFullYear()} TindaLog. All rights reserved.
+          </Text>
+        </View>
       </ScrollView>
     </SafeAreaProvider>
   );
@@ -288,6 +307,7 @@ const styles = StyleSheet.create({
   section: {
     gap: 12,
   },
+
   sectionTitleHeader: {
     fontSize: 24,
     color: COLORS.DARK,
