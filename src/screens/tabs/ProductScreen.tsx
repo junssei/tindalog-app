@@ -16,6 +16,7 @@ import COLORS from '../../constants/colors';
 import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+import SCREENS from '../../screens';
 
 type Products = {
   product_id: number;
@@ -87,6 +88,14 @@ const ProductScreen = () => {
               ]}
             />
           </View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(SCREENS.ADDPRODUCTSCREEN as never)}
+            style={styles.addButton}
+            activeOpacity={0.85}
+          >
+            <Icon name="add" size={22} color={COLORS.DARK} />
+            <Text style={styles.addButtonText}>Add</Text>
+          </TouchableOpacity>
         </View>
         <FlatList
           contentContainerStyle={{ paddingBottom: 220, paddingTop: 12 }}
@@ -141,7 +150,14 @@ const ProductScreen = () => {
                 alignItems: 'center',
               }}
             >
-              <Text style={{ fontSize: 16, color: 'gray' }}>No rows found</Text>
+              <Text style={{ fontSize: 16, color: COLORS.DARKGRAY, fontFamily: FONTS.MEDIUM }}>No products found</Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate(SCREENS.ADDPRODUCTSCREEN as never)}
+                style={[styles.addButton, { marginTop: 10 }]}
+              >
+                <Icon name="add" size={20} color={COLORS.DARK} />
+                <Text style={styles.addButtonText}>Add Product</Text>
+              </TouchableOpacity>
             </View>
           )}
         />
@@ -170,12 +186,29 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F8FBFF',
+    backgroundColor: '#F6F8FC',
     borderWidth: 1,
-    borderColor: COLORS.BLUE,
+    borderColor: '#D8E1F0',
+    paddingHorizontal: 14,
+    borderRadius: 12,
+    height: 46,
+  },
+  addButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    backgroundColor: COLORS.PRIMARY,
+    borderWidth: 1,
+    borderColor: COLORS.DARK,
     paddingHorizontal: 12,
-    borderRadius: 30,
     height: 44,
+    borderRadius: 10,
+    marginLeft: 10,
+  },
+  addButtonText: {
+    fontFamily: FONTS.SEMIBOLD,
+    color: COLORS.DARK,
+    fontSize: 14,
   },
   typeChip: {
     borderRadius: 16,

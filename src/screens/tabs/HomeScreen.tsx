@@ -23,6 +23,7 @@ import COLORS from '../../constants/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
 
 type Customer = {
   id: number;
@@ -180,7 +181,11 @@ const HomeScreen = () => {
           <View style={[styles.section]}>
             <Text style={[styles.sectionTitleHeader]}> Total </Text>
             <View style={[styles.card, { backgroundColor: COLORS.PRIMARY }]}>
-              <Icon name="home" size={32} color={COLORS.DARK} />
+              <MaterialDesignIcons
+                name="account-group"
+                size={32}
+                color={COLORS.DARK}
+              />
               <View style={[styles.cardTextSection, { alignItems: 'center' }]}>
                 <Text style={{ fontFamily: FONTS.REGULAR, fontSize: 24 }}>
                   {' '}
@@ -261,7 +266,8 @@ const HomeScreen = () => {
                 <Text style={[styles.buttonText]}> Customer </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.button, { backgroundColor: COLORS.PRIMARY }]}
+                style={[styles.button, { backgroundColor: COLORS.ORANGE }]}
+                onPress={() => navigation.navigate('ADDPRODUCT')}
               >
                 <Icon name="add" size={24} color={COLORS.DARK} />
                 <Text style={[styles.buttonText]}> Products </Text>

@@ -152,7 +152,14 @@ const UserStackNavigation = () => {
         component={AddPayment}
         options={{
           headerShown: true,
+          headerTitle: '',
+          headerTransparent: true,
+          headerShadowVisible: false,
+          headerStyle: { backgroundColor: 'transparent', elevation: 0 },
           headerBackButtonDisplayMode: 'minimal',
+          headerBackImage: () => (
+            <Icon name="chevron-back" size={22} color={COLORS.DARK} />
+          ),
         }}
       />
       <UserStack.Screen
@@ -167,7 +174,7 @@ const UserStackNavigation = () => {
         name={SCREENS.ADDSALESCREEN}
         component={AddSale}
         options={{
-          headerShown: true,
+          headerShown: false,
           headerBackButtonDisplayMode: 'minimal',
         }}
       />
@@ -201,7 +208,6 @@ const UserTabNavigation = () => {
           height: 80,
           paddingTop: 16,
           paddingBottom: 8,
-          // position: 'absolute',
         },
         tabBarAllowFontScaling: true,
         tabBarItemStyle: {

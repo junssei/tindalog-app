@@ -33,6 +33,9 @@ const ViewProductScreen = ({ route }) => {
   } = route.params;
 
   const [item, setItem] = useState('');
+  const [history, setHistory] = useState([]);
+  const [totals, setTotals] = useState({ total_quantity: 0, total_sales: 0 });
+  const [loadingHistory, setLoadingHistory] = useState(true);
   React.useEffect(() => {
     const url = `https://tindalog-backend.up.railway.app/user/${userID}/product/${product_id}`;
 
@@ -48,6 +51,31 @@ const ViewProductScreen = ({ route }) => {
         console.log('Successfully fetching product!');
       })
       .catch(err => console.error('Error fetching product:', err));
+  }, [userID, product_id]);
+
+  useEffect(() => {
+    const loadHistory = async () => {
+      setLoadingHistory(true);
+      try {
+        const url = `https://tindalog-backend.up.railway.app/products/${product_id}/history?userId=${userID}&limit=100`;
+        const res = await fetch(url);
+        const data = await res.json();
+        if (res.ok) {
+          setHistory(Array.isArray(data?.history) ? data.history : []);
+          setTotals({
+            total_quantity: Number(data?.total_quantity || 0),
+            total_sales: Number(data?.total_sales || 0),
+          });
+        } else {
+          setHistory([]);
+        }
+      } catch (e) {
+        setHistory([]);
+      } finally {
+        setLoadingHistory(false);
+      }
+    };
+    loadHistory();
   }, [userID, product_id]);
 
   const confirmDelete = product_id => {
@@ -163,6 +191,53 @@ const ViewProductScreen = ({ route }) => {
               </Text>
             </View>
           )}
+
+          {/* History */}
+          <View style={{ width: '100%', marginTop: 16 }}>
+            <Text style={{ fontFamily: FONTS.BOLD, fontSize: 18, color: COLORS.DARK }}>Purchase History</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 6 }}>
+              <Text style={{ fontFamily: FONTS.MEDIUM, color: COLORS.DARKGRAY }}>Total Qty: {totals.total_quantity}</Text>
+              <Text style={{ fontFamily: FONTS.MEDIUM, color: COLORS.DARKGRAY }}>Total Sales: ₱{totals.total_sales.toFixed(2)}</Text>
+            </View>
+            {loadingHistory ? (
+              <View style={{ paddingVertical: 16, alignItems: 'center' }}>
+                <ActivityIndicator size="small" color={COLORS.BLUE} />
+              </View>
+            ) : (
+              <FlatList
+                contentContainerStyle={{ paddingTop: 8 }}
+                data={history}
+                keyExtractor={(row, idx) => String(row.order_id) + '-' + idx}
+                renderItem={({ item: row }) => (
+                  <View style={{
+                    borderWidth: 1,
+                    borderColor: COLORS.DARK,
+                    borderRadius: 10,
+                    padding: 12,
+                    marginBottom: 10,
+                    backgroundColor: '#FFF',
+                  }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                      <Text style={{ fontFamily: FONTS.MEDIUM, color: COLORS.DARK }}>
+                        {row.customer_name || 'Customer'}
+                      </Text>
+                      <Text style={{ fontFamily: FONTS.REGULAR, color: COLORS.DARKGRAY }}>
+                        {new Date(row.created_at).toLocaleDateString()}
+                      </Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 4 }}>
+                      <Text style={{ fontFamily: FONTS.MEDIUM, color: COLORS.DARK }}>Qty: {row.quantity}</Text>
+                      <Text style={{ fontFamily: FONTS.MEDIUM, color: COLORS.DARK }}>Subtotal: ₱{Number(row.subtotal).toFixed(2)}</Text>
+                    </View>
+                    <Text style={{ fontFamily: FONTS.REGULAR, color: COLORS.DARKGRAY, marginTop: 2 }}>Status: {row.status}</Text>
+                  </View>
+                )}
+                ListEmptyComponent={() => (
+                  <Text style={{ fontFamily: FONTS.MEDIUM, color: COLORS.DARKGRAY, paddingVertical: 12 }}>No purchase history</Text>
+                )}
+              />
+            )}
+          </View>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>

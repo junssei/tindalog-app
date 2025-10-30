@@ -14,7 +14,8 @@
     "src/screens/group/customer/EditCustomerProfileScreen.js",
     "src/navigation/usernavigation.js",
     "src/screens/tabs/AccountScreen.js",
-    "src/screens/admin/tabs/AccountScreen.js"
+    "src/screens/admin/tabs/AccountScreen.js",
+    "src/screens/form/add_sale.js"
   ],
   "exclude": ["**/node_modules", "**/Pods"]
 }

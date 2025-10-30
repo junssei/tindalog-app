@@ -13,6 +13,7 @@ import {
   Linking,
   ActivityIndicator,
 } from 'react-native';
+import SCREENS from '../../index';
 import FONTS from '../../../constants/fonts';
 import COLORS from '../../../constants/colors';
 import React, { useState, useEffect } from 'react';
@@ -144,7 +145,7 @@ const CustomerProfileScreen = ({ route }) => {
             </Text>
           </View>
           <View style={styles.profileAction}>
-            <TouchableOpacity style={[styles.button, styles.defaultButton]}>
+            <TouchableOpacity style={[styles.button, styles.defaultButton]} onPress={() => navigation.navigate(SCREENS.ADDSALESCREEN)}>
               <Icon name="add" size={22} color={COLORS.DARK} />
               <Text style={styles.buttonText}> Transaction </Text>
             </TouchableOpacity>
